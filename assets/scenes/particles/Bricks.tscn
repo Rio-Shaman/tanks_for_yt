@@ -1,0 +1,56 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/models/particles/brick_1.tscn" type="PackedScene" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Spatial
+
+# эффект разрушения
+func destroy() -> void:
+	
+	# листаем кирпичи
+	for _brick in get_children():
+		# включаем обработку
+		_brick.set_mode(_brick.MODE_RIGID);
+		
+		# настраиваем разброс кирпичей
+		_brick.linear_velocity.y = 5;
+		_brick.linear_velocity.x = -3 + randi() % 7;
+		_brick.linear_velocity.z = -3 + randi() % 7;
+"
+
+[node name="Bricks" type="Spatial"]
+script = SubResource( 1 )
+
+[node name="brick_1" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.796098, 0, -0.605168, 0, 1, 0, 0.605168, 0, 0.796098, 0.281376, 0, 0.310786 )
+
+[node name="brick_2" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.781434, 0, 0.623988, 0, 1, 0, -0.623988, 0, 0.781434, 0.577318, 0.205207, 0.421461 )
+
+[node name="brick_7" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.613044, 0, -0.790048, 0, 1, 0, 0.790048, 0, 0.613044, 0.522308, 0.413487, 0.508311 )
+
+[node name="brick_3" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.751852, 0, -0.659332, 0, 1, 0, 0.659332, 0, 0.751852, 0.767827, 0, 0.765744 )
+
+[node name="brick_12" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.800972, 0, 0.598702, 0, 1, 0, -0.598702, 0, 0.800972, 0.742596, -1.19209e-07, 0.258971 )
+
+[node name="brick_5" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.796098, 0, -0.605168, 0, 1, 0, 0.605168, 0, 0.796098, 0.281376, 0.588474, 0.310786 )
+
+[node name="brick_8" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.640994, 0, 0.767546, 0, 1, 0, -0.767546, 0, 0.640994, 0.514152, 0.792232, 0.32728 )
+
+[node name="brick_9" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.640994, 0, 0.767546, 0, 1, 0, -0.767546, 0, 0.640994, 0.571388, 0.815179, 0.73227 )
+
+[node name="brick_10" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.640994, 0, 0.767546, 0, 1, 0, -0.767546, 0, 0.640994, 0.262825, 0.616516, 0.790102 )
+
+[node name="brick_11" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.288264, 0, 0.957551, 0, 1, 0, -0.957551, 0, 0.288264, 0.283254, 0.265619, 0.800083 )
+
+[node name="brick_6" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.751852, 0, -0.659332, 0, 1, 0, 0.659332, 0, 0.751852, 0.767827, 0.588474, 0.765744 )

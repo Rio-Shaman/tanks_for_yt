@@ -1,0 +1,50 @@
+[gd_scene load_steps=4 format=2]
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends KinematicBody
+
+# механизм действий
+var actions: CActions;
+
+# скорость передвижения
+var speed: float = 10;
+
+# узел готов
+func _ready() -> void:
+	# поднимаем механизм действий
+	actions = CActions.new(self);
+	
+	# регаем возможные действия
+	actions.set_action(CActionsAmmunitionGo.new(\"bullet_flight\", 3));
+	
+# процесс работы приложения
+func _physics_process(delta: float) -> void:
+	# если нет действий
+	if false == actions.has_current_action():
+		# стартуем
+		actions.set_current_action(\"bullet_flight\", delta);
+		
+	# продолжаем пройцесс действия
+	actions.get_current_action().process(delta);
+"
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 0.211765, 0.160784, 0.160784, 1 )
+
+[sub_resource type="SphereShape" id=2]
+radius = 0.185
+
+[node name="Shell_Player" type="KinematicBody"]
+collision_layer = 8
+collision_mask = 49
+script = SubResource( 3 )
+
+[node name="CSGSphere" type="CSGSphere" parent="."]
+radius = 0.2
+radial_segments = 8
+rings = 4
+smooth_faces = false
+material = SubResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 2 )

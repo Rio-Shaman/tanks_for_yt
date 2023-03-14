@@ -20,6 +20,11 @@ _global_script_classes=[ {
 "path": "res://classes/CActions.gd"
 }, {
 "base": "CActionBase",
+"class": "CActionsAmmunitionGo",
+"language": "GDScript",
+"path": "res://classes/actions/ammunition/CActionsAmmunitionGo.gd"
+}, {
+"base": "CActionBase",
 "class": "CActionsPlayerGo",
 "language": "GDScript",
 "path": "res://classes/actions/player/CActionsPlayerGo.gd"
@@ -28,6 +33,11 @@ _global_script_classes=[ {
 "class": "CActionsPlayerShot",
 "language": "GDScript",
 "path": "res://classes/actions/player/CActionsPlayerShot.gd"
+}, {
+"base": "CActionBase",
+"class": "CActionsWallDestroy",
+"language": "GDScript",
+"path": "res://classes/actions/wall/CActionsWallDestroy.gd"
 }, {
 "base": "Reference",
 "class": "CAudio",
@@ -62,8 +72,10 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "CActionBase": "",
 "CActions": "",
+"CActionsAmmunitionGo": "",
 "CActionsPlayerGo": "",
 "CActionsPlayerShot": "",
+"CActionsWallDestroy": "",
 "CAudio": "",
 "CControl": "",
 "CControlRule": "",
@@ -75,7 +87,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Tanks For Youtube"
-run/main_scene="res://assets/scenes/world/Map.tscn"
+run/main_scene="res://assets/scenes/locations/Level_1.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -1222,6 +1234,19 @@ ui_player_1_shot={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
+
+[layer_names]
+
+3d_physics/layer_1="Мир"
+3d_physics/layer_2="Игрок 1"
+3d_physics/layer_3="Игрок 2"
+3d_physics/layer_4="Снаряд игрока"
+3d_physics/layer_5="НПС"
+3d_physics/layer_6="Снаряд НПС"
+3d_physics/layer_7="Лед"
+3d_physics/layer_8="Вода игрока 1"
+3d_physics/layer_9="Вода игрока 2"
+3d_physics/layer_10="Бонусы"
 
 [physics]
 
