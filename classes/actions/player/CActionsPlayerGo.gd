@@ -5,13 +5,16 @@ class_name CActionsPlayerGo
 # направление
 var _direction: String;
 
+# дельта
+var _delta: float;
+
 # инициализировать действие
 func _init(name: String, direction: String).(name) -> void:
 	# запоминаем направление
 	_direction = direction;
 	
 # первичное действие
-func run(_delta: float) -> void:
+func run(delta: float) -> void:
 	# ротация
 	match _direction:
 		"left":
@@ -22,6 +25,9 @@ func run(_delta: float) -> void:
 			_entity.rotation.y = 0;
 		"down":
 			_entity.rotation.y = -PI;
+			
+	# запоминаем дельту
+	_delta = delta;
 	
 # процесс действия
 func process(delta: float) -> void:
@@ -50,11 +56,16 @@ func process(delta: float) -> void:
 	
 	# метод родителя
 	.process(delta);
-	
+
 # окончание действия
 func end() -> void:
 	# родитель
 	.end();
+	
+	# на льду ли игрок
+	if true == _entity.is_on_ice():
+		# стартцем скольжение
+		_entity.actions.set_current_action("slip", _delta);
 
 
 

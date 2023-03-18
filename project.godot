@@ -35,6 +35,11 @@ _global_script_classes=[ {
 "path": "res://classes/actions/player/CActionsPlayerShot.gd"
 }, {
 "base": "CActionBase",
+"class": "CActionsPlayerSlip",
+"language": "GDScript",
+"path": "res://classes/actions/player/CActionsPlayerSlip.gd"
+}, {
+"base": "CActionBase",
 "class": "CActionsWallDestroy",
 "language": "GDScript",
 "path": "res://classes/actions/wall/CActionsWallDestroy.gd"
@@ -75,6 +80,7 @@ _global_script_class_icons={
 "CActionsAmmunitionGo": "",
 "CActionsPlayerGo": "",
 "CActionsPlayerShot": "",
+"CActionsPlayerSlip": "",
 "CActionsWallDestroy": "",
 "CAudio": "",
 "CControl": "",
