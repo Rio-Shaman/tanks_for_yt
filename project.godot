@@ -25,6 +25,16 @@ _global_script_classes=[ {
 "path": "res://classes/actions/ammunition/CActionsAmmunitionGo.gd"
 }, {
 "base": "CActionBase",
+"class": "CActionsNPCGo",
+"language": "GDScript",
+"path": "res://classes/actions/npc/CActionsNPCGo.gd"
+}, {
+"base": "CActionBase",
+"class": "CActionsNPCShot",
+"language": "GDScript",
+"path": "res://classes/actions/npc/CActionsNPCShot.gd"
+}, {
+"base": "CActionBase",
 "class": "CActionsPlayerGo",
 "language": "GDScript",
 "path": "res://classes/actions/player/CActionsPlayerGo.gd"
@@ -78,6 +88,8 @@ _global_script_class_icons={
 "CActionBase": "",
 "CActions": "",
 "CActionsAmmunitionGo": "",
+"CActionsNPCGo": "",
+"CActionsNPCShot": "",
 "CActionsPlayerGo": "",
 "CActionsPlayerShot": "",
 "CActionsPlayerSlip": "",

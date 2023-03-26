@@ -34,6 +34,9 @@ func load_scene() -> void:
 	# контролы
 	control_1 = CControl.new();
 	
+	# сетка
+	grid = CGrid.new();
+	
 	# говорим, что данные для сцены подгружены
 	_is_loaded_scene = true;
 
