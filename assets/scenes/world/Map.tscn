@@ -1,8 +1,10 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/models/navigation/Point.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/scenes/world/Wall_1.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/scenes/world/Wall_3.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/models/exteriors/Hangar.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/scenes/world/Base.tscn" type="PackedScene" id=5]
 
 [sub_resource type="QuadMesh" id=1]
 size = Vector2( 75, 75 )
@@ -29,6 +31,7 @@ extents = Vector3( 13, 1, 13 )
 
 [node name="Start" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -25 )
+visible = false
 
 [node name="Hangar" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0.869191 )
@@ -696,6 +699,38 @@ collision_mask = 0
 [node name="CollisionShape" type="CollisionShape" parent="Floor"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -1, -13 )
 shape = SubResource( 10 )
+
+[node name="Base" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 0 )
+
+[node name="Eagle" parent="Base" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
+
+[node name="Unarmored" type="Spatial" parent="Base"]
+
+[node name="wall_1" parent="Base/Unarmored" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -1 )
+
+[node name="wall_2" parent="Base/Unarmored" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2 )
+
+[node name="wall_3" parent="Base/Unarmored" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -3 )
+
+[node name="wall_4" parent="Base/Unarmored" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -3 )
+
+[node name="wall_5" parent="Base/Unarmored" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3 )
+
+[node name="wall_6" parent="Base/Unarmored" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -3 )
+
+[node name="wall_7" parent="Base/Unarmored" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -2 )
+
+[node name="wall_8" parent="Base/Unarmored" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.866025, -4.44089e-16, 0.5, -0.482963, 0.258819, 0.836516, -0.12941, -0.965926, 0.224144, 0, 15, -8 )

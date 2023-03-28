@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/models/resources/base_destroyed_2/base_destroyed_2_022.mesh" type="ArrayMesh" id=1]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.191243, 0.100926, 0.297522 )
+
+[node name="base_destroyed_2" type="RigidBody"]
+collision_layer = 0
+mode = 1
+
+[node name="base_destroyed_2" type="MeshInstance" parent="."]
+mesh = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0413953, 0.101865, 0.0428431 )
+shape = SubResource( 1 )

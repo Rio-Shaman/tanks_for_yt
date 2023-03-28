@@ -8,7 +8,6 @@ extents = Vector3( 0.705175, 0.451445, 1.00648 )
 
 [node name="NPC_1" type="KinematicBody"]
 collision_layer = 16
-collision_mask = 0
 script = ExtResource( 2 )
 
 [node name="Tank" parent="." instance=ExtResource( 1 )]

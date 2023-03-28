@@ -1,26 +1,10 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://assets/models/particles/brick_1.tscn" type="PackedScene" id=1]
-
-[sub_resource type="GDScript" id=1]
-script/source = "extends Spatial
-
-# эффект разрушения
-func destroy() -> void:
-	
-	# листаем кирпичи
-	for _brick in get_children():
-		# включаем обработку
-		_brick.set_mode(_brick.MODE_RIGID);
-		
-		# настраиваем разброс кирпичей
-		_brick.linear_velocity.y = 5;
-		_brick.linear_velocity.x = -3 + randi() % 7;
-		_brick.linear_velocity.z = -3 + randi() % 7;
-"
+[ext_resource path="res://scripts/Destroy.gd" type="Script" id=2]
 
 [node name="Bricks" type="Spatial"]
-script = SubResource( 1 )
+script = ExtResource( 2 )
 
 [node name="brick_1" parent="." instance=ExtResource( 1 )]
 transform = Transform( 0.796098, 0, -0.605168, 0, 1, 0, 0.605168, 0, 0.796098, 0.281376, 0, 0.310786 )

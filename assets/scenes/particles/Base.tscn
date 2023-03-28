@@ -1,0 +1,50 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://assets/models/particles/base_destroyed_8.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/models/particles/base_destroyed_4.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/models/particles/base_destroyed_7.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/models/particles/base_destroyed_9.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/models/particles/base_destroyed_10.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/models/particles/base_destroyed_3.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/models/particles/base_destroyed_5.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/models/particles/base_destroyed_2.tscn" type="PackedScene" id=8]
+[ext_resource path="res://assets/models/particles/base_destroyed_11.tscn" type="PackedScene" id=9]
+[ext_resource path="res://assets/models/particles/base_destroyed_1.tscn" type="PackedScene" id=10]
+[ext_resource path="res://assets/models/particles/base_destroyed_6.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scripts/Destroy.gd" type="Script" id=12]
+
+[node name="Parts" type="Spatial"]
+script = ExtResource( 12 )
+
+[node name="base_destroyed_1" parent="." instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.871697, 0, -0.394941 )
+
+[node name="base_destroyed_2" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.831758, 0, 0.00443763 )
+
+[node name="base_destroyed_3" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.404201, 0, -0.0621254 )
+
+[node name="base_destroyed_4" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.479639, 0, 0.266252 )
+
+[node name="base_destroyed_5" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.177887, 0, 0.195252 )
+
+[node name="base_destroyed_6" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0218024, 0, -0.332816 )
+
+[node name="base_destroyed_7" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0218024, 0, 0.470379 )
+
+[node name="base_destroyed_8" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.376805, 0, -0.102063 )
+
+[node name="base_destroyed_9" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.931498, 0, -0.497004 )
+
+[node name="base_destroyed_10" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.682995, 0, 0.0310629 )
+
+[node name="base_destroyed_11" parent="." instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.829435, 0, 0.146439 )

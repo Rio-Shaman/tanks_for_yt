@@ -55,6 +55,8 @@ func is_on_ice() -> bool:
 extents = Vector3( 0.698663, 0.449871, 1 )
 
 [node name="Player_1" type="KinematicBody"]
+collision_layer = 2
+collision_mask = 693
 script = SubResource( 3 )
 
 [node name="tank_1_1" parent="." instance=ExtResource( 1 )]
