@@ -75,3 +75,10 @@ func process(delta: float) -> void:
 	# метод родителя
 	.process(delta);
 
+# получить набор точек, по которые
+# должен проехать НПС
+func get_path() -> PoolVector3Array:
+	return _path;
+
+
+

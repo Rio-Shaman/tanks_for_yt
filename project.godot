@@ -30,6 +30,11 @@ _global_script_classes=[ {
 "path": "res://classes/actions/base/CActionsBaseDestroy.gd"
 }, {
 "base": "CActionBase",
+"class": "CActionsNPCDestroy",
+"language": "GDScript",
+"path": "res://classes/actions/npc/CActionsNPCDestroy.gd"
+}, {
+"base": "CActionBase",
 "class": "CActionsNPCGo",
 "language": "GDScript",
 "path": "res://classes/actions/npc/CActionsNPCGo.gd"
@@ -38,6 +43,11 @@ _global_script_classes=[ {
 "class": "CActionsNPCShot",
 "language": "GDScript",
 "path": "res://classes/actions/npc/CActionsNPCShot.gd"
+}, {
+"base": "CActionBase",
+"class": "CActionsPlayerDestroy",
+"language": "GDScript",
+"path": "res://classes/actions/player/CActionsPlayerDestroy.gd"
 }, {
 "base": "CActionBase",
 "class": "CActionsPlayerGo",
@@ -79,6 +89,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/CGrid.gd"
 }, {
+"base": "KinematicBody",
+"class": "CPlayerBase",
+"language": "GDScript",
+"path": "res://scripts/Player.gd"
+}, {
 "base": "Reference",
 "class": "CThread",
 "language": "GDScript",
@@ -94,8 +109,10 @@ _global_script_class_icons={
 "CActions": "",
 "CActionsAmmunitionGo": "",
 "CActionsBaseDestroy": "",
+"CActionsNPCDestroy": "",
 "CActionsNPCGo": "",
 "CActionsNPCShot": "",
+"CActionsPlayerDestroy": "",
 "CActionsPlayerGo": "",
 "CActionsPlayerShot": "",
 "CActionsPlayerSlip": "",
@@ -104,6 +121,7 @@ _global_script_class_icons={
 "CControl": "",
 "CControlRule": "",
 "CGrid": "",
+"CPlayerBase": "",
 "CThread": "",
 "CTmp": ""
 }

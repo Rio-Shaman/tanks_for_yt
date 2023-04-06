@@ -3,12 +3,14 @@ extends KinematicBody
 # скорость танка
 var speed: float = 3;
 
+# хп НПС
+var hp: int = 1;
+
 # механизм действий
 var actions: CActions;
 
 # узел готов
 func _ready() -> void:
-	
 	# поднимаем механизм действий
 	actions = CActions.new(self);
 	
@@ -16,6 +18,8 @@ func _ready() -> void:
 	actions.set_action(CActionsNPCShot.new("shot"));
 	# регаем действие "ездить"
 	actions.set_action(CActionsNPCGo.new("go"));
+	# регаю дейстиве "уничтожить"
+	actions.set_action(CActionsNPCDestroy.new("destroy"));
 	
 	# регаем действие "ездить" в потоке ноль
 	actions.set_thread_action(0, "go");
@@ -26,8 +30,15 @@ func _ready() -> void:
 # раз в кадр
 func _physics_process(delta: float) -> void:
 
+	# если есть ВНЕ потоковое действие
+	if true == actions.has_current_action():
+		# исполняем его
+		actions.get_current_action().process(delta);
+		# обрываем _physics_process
+		return;
+	
 	# если нет активных действия на нулевом потоке
-	if !actions.has_current_action(0):
+	if false == actions.has_current_action(0):
 		# стартуем действие езды
 		actions.set_current_action("go", delta, 0);
 		# запускаем процесс
@@ -46,6 +57,18 @@ func _physics_process(delta: float) -> void:
 		else:
 			# выполняем его
 			actions.get_current_action(1).process(delta);
+
+# нанести урон
+func make_damage(delta: float) -> void:
+	# если у танка хп на один удар
+	if hp == 1:
+		# стартуем действие "уничтожить танк"
+		actions.set_current_action("destroy", delta);
+	
+	# если есть еще хп
+	else:
+		# уменьшаем на один пункт
+		hp -= 1;
 
 # полчаем следующую клетку относительно
 # текущих координат

@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/models/resources/tank_destroyed_2/tank_destroyed_2_009.mesh" type="ArrayMesh" id=1]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.210526, 0.0507385, 0.0716975 )
+
+[node name="tank_destroyed_2" type="RigidBody"]
+collision_layer = 0
+mode = 1
+
+[node name="tank_destroyed_2" type="MeshInstance" parent="."]
+mesh = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.000135619, -0.00776345 )
+shape = SubResource( 1 )

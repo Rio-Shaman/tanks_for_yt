@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/models/particles/tank_destroyed_5.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/models/particles/tank_destroyed_4.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/models/particles/tank_destroyed_3.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/models/particles/tank_destroyed_2.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/models/particles/tank_destroyed_1.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scripts/Destroy.gd" type="Script" id=6]
+
+[node name="Parts" type="Spatial"]
+script = ExtResource( 6 )
+
+[node name="tank_destroyed_1" parent="." instance=ExtResource( 5 )]
+transform = Transform( 2.98023e-08, 0, -1, 0, 1, 0, 1, 0, 2.98023e-08, 0.201477, 0.655352, 0.234445 )
+
+[node name="tank_destroyed_2" parent="." instance=ExtResource( 4 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.729748, -0.693036 )
+
+[node name="tank_destroyed_3" parent="." instance=ExtResource( 3 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.549797, 0.269312, -0.568466 )
+
+[node name="tank_destroyed_4" parent="." instance=ExtResource( 3 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.50637, 0.269312, -0.568466 )
+
+[node name="tank_destroyed_5" parent="." instance=ExtResource( 2 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.523542, 0.275103, 0.601756 )
+
+[node name="tank_destroyed_6" parent="." instance=ExtResource( 2 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.501165, 0.275103, 0.601756 )
+
+[node name="tank_destroyed_7" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.649501, 0, -0.760361, 0, 1, 0, 0.760361, 0, 0.649501, 0, 0.401998, -0.36956 )
+
+[node name="tank_destroyed_8" parent="." instance=ExtResource( 1 )]
+transform = Transform( -0.664683, 0, 0.747126, 0, 1, 0, -0.747126, 0, -0.664683, 0, 0.401998, 0.520811 )
