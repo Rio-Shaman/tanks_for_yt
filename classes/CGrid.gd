@@ -203,6 +203,9 @@ func get_cell_by_type(type: int, _slice: int = 1) -> Dictionary:
 	# возвращаем нужную клетку из массива найденных клеток
 	return _collect[_slice - 1] if _collect.size() > 0 else {};
 
+# получаем размер ячейки
+func get_cell_size() -> Vector3:
+	return CApp.get_scene().get_node("Map/GridMap").cell_size;
 
 
 

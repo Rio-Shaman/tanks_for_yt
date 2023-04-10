@@ -2,12 +2,18 @@ extends CActionBase
 
 class_name CActionsPlayerDestroy
 
+# дельта
+var _delta: float;
+
 # инициализировать действие
 func _init(name: String).(name) -> void:
 	pass
 	
 # первичное действие
-func run(_delta: float) -> void:
+func run(delta: float) -> void:
+	# сохраняем дельту
+	_delta = delta;
+
 	# стартуем таймер
 	start_timer(1.5);
 	
@@ -22,6 +28,8 @@ func run(_delta: float) -> void:
 	
 	# отключаю коллизию
 	_entity.get_node("CollisionShape").disabled = true;
+	# отключаю реакцию на мир
+	_entity.set_collision_mask_bit(0, false);
 	# уничтожаем модель танка
 	_entity.get_node("Tank").queue_free();
 	# запускаем скрипт разрушения
@@ -45,8 +53,22 @@ func end() -> void:
 	# удаляем частицы с сцены
 	_entity.get_node("Parts").free();
 	
-	#
-
-
-
+	# получаем точку респа
+	var _respawn_point = (
+		CApp.grid.get_cell_by_type(CApp.grid._PLAYER_1).vector
+	);
+	# двигаю танк в ангар
+	_respawn_point = _respawn_point + Vector3(0, 0, 2 * CApp.grid.get_cell_size().z)
+	# устанавливаем стратовые координаты танка
+	_entity.global_translation = _respawn_point;
+	# уменьшаем кол-во жизней
+	_entity.set_lives(_entity.lives - 1);
+	
+	# если жизней более нуля
+	if _entity.lives > 0:
+		# старт действия "возродить"
+		_entity.actions.set_current_action("respawn", _delta);
+		
+	else:
+		print("game over");
 

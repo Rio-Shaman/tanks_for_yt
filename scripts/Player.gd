@@ -11,6 +11,9 @@ var hp: int = 1;
 # жизни игрока
 var lives: int = 3;
 
+# флаг первого кадра
+var _first_frame: bool = true;
+
 # механизм действий
 var actions: CActions;
 
@@ -21,6 +24,18 @@ func ready() -> void:
 	
 	# назначаем жизней
 	set_lives(3);
+
+# раз в кадр
+func _physics_process(delta: float) -> void:
+	# если первый кадр
+	if true == _first_frame:
+		# если жизней более нуля
+		if lives > 0:
+			# старт действия "возродить"
+			actions.set_current_action("respawn", delta);
+		
+		# первый кадр отработал
+		_first_frame = false;
 
 # нанести урон
 func make_damage(delta: float) -> void:
@@ -36,6 +51,7 @@ func make_damage(delta: float) -> void:
 		# уменьшаем хп на ед.
 		set_hp(hp - 1);
 		# обновление танка
+		update();
 
 # установить для хп значение
 func set_hp(value: int) -> void:
@@ -46,6 +62,24 @@ func set_hp(value: int) -> void:
 func set_lives(value: int) -> void:
 	# назначаю новое значение
 	lives = value;
+
+# обновление танка
+func update() -> void:
+	# если есть узел модели танка
+	if true == has_node("Tank"):
+		# удаляем модель танка
+		get_node("Tank").free();
+	
+	# получаем новую модель танка
+	var _tank = load(
+		"res://assets/models/tanks/tank_1_" + String(hp) + ".tscn"
+	).instance();
+	
+	# даем конкретное имя узлу
+	_tank.set_name("Tank");
+	
+	# грузим на сцену
+	add_child(_tank);
 
 # проверка, на льду ли танк
 func is_on_ice() -> bool:

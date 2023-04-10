@@ -10,7 +10,7 @@ func _init(name: String).(name) -> void:
 	pass;
 	
 # первичное действие
-func run(delta: float) -> void:
+func run(_delta: float) -> void:
 	# получаем путь
 	_path = CApp.grid.get_astar().get_point_path(
 		CApp.grid.get_cell_by_position(_entity.global_translation).id,

@@ -55,6 +55,11 @@ _global_script_classes=[ {
 "path": "res://classes/actions/player/CActionsPlayerGo.gd"
 }, {
 "base": "CActionBase",
+"class": "CActionsPlayerRespawn",
+"language": "GDScript",
+"path": "res://classes/actions/player/CActionsPlayerRespawn.gd"
+}, {
+"base": "CActionBase",
 "class": "CActionsPlayerShot",
 "language": "GDScript",
 "path": "res://classes/actions/player/CActionsPlayerShot.gd"
@@ -114,6 +119,7 @@ _global_script_class_icons={
 "CActionsNPCShot": "",
 "CActionsPlayerDestroy": "",
 "CActionsPlayerGo": "",
+"CActionsPlayerRespawn": "",
 "CActionsPlayerShot": "",
 "CActionsPlayerSlip": "",
 "CActionsWallDestroy": "",
