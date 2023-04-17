@@ -6,8 +6,17 @@ var speed: float = 3;
 # хп НПС
 var hp: int = 1;
 
+# тип танка
+var type: int = 1;
+
 # механизм действий
 var actions: CActions;
+
+# точка респа
+var respawn_point: Vector3;
+
+# флаг первого кадра
+var _first_frame: bool = true;
 
 # узел готов
 func _ready() -> void:
@@ -20,9 +29,13 @@ func _ready() -> void:
 	actions.set_action(CActionsNPCGo.new("go"));
 	# регаю дейстиве "уничтожить"
 	actions.set_action(CActionsNPCDestroy.new("destroy"));
+	# регаем дейстиве "возродить"
+	actions.set_action(CActionsNPCRespawn.new("respawn"));
 	
 	# регаем действие "ездить" в потоке ноль
 	actions.set_thread_action(0, "go");
+	# регаем действие "возродить" в потоке ноль
+	actions.set_thread_action(0, "respawn");
 	
 	# регаем действие "стрелять" в потоке один
 	actions.set_thread_action(1, "shot");
@@ -30,6 +43,19 @@ func _ready() -> void:
 # раз в кадр
 func _physics_process(delta: float) -> void:
 
+	# если первый кадр
+	if true == _first_frame:
+		# старт действия "возродить"
+		actions.set_current_action("respawn", delta, 0);
+		# запускаем процесс
+		actions.get_current_action(0).process(delta);
+		
+		# первый кадр отработал
+		_first_frame = false;
+		
+		# завершаем процесс
+		return;
+	
 	# если есть ВНЕ потоковое действие
 	if true == actions.has_current_action():
 		# исполняем его

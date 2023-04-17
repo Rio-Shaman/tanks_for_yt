@@ -40,6 +40,16 @@ _global_script_classes=[ {
 "path": "res://classes/actions/npc/CActionsNPCGo.gd"
 }, {
 "base": "CActionBase",
+"class": "CActionsNPCLoad",
+"language": "GDScript",
+"path": "res://classes/actions/npc/CActionsNPCLoad.gd"
+}, {
+"base": "CActionBase",
+"class": "CActionsNPCRespawn",
+"language": "GDScript",
+"path": "res://classes/actions/npc/CActionsNPCRespawn.gd"
+}, {
+"base": "CActionBase",
 "class": "CActionsNPCShot",
 "language": "GDScript",
 "path": "res://classes/actions/npc/CActionsNPCShot.gd"
@@ -116,6 +126,8 @@ _global_script_class_icons={
 "CActionsBaseDestroy": "",
 "CActionsNPCDestroy": "",
 "CActionsNPCGo": "",
+"CActionsNPCLoad": "",
+"CActionsNPCRespawn": "",
 "CActionsNPCShot": "",
 "CActionsPlayerDestroy": "",
 "CActionsPlayerGo": "",
