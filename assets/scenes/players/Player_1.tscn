@@ -74,3 +74,25 @@ collision_mask = 64
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.5, -0.5 )
 enabled = true
 collision_mask = 64
+
+[node name="WaterDetectors" type="Spatial" parent="."]
+
+[node name="Detector" type="RayCast" parent="WaterDetectors"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.5, 0.5 )
+enabled = true
+collision_mask = 128
+
+[node name="Detector2" type="RayCast" parent="WaterDetectors"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.5, 0.5 )
+enabled = true
+collision_mask = 128
+
+[node name="Detector3" type="RayCast" parent="WaterDetectors"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.5, -0.5 )
+enabled = true
+collision_mask = 128
+
+[node name="Detector4" type="RayCast" parent="WaterDetectors"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.5, -0.5 )
+enabled = true
+collision_mask = 128

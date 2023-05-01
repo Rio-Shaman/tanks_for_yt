@@ -39,6 +39,13 @@ func _ready() -> void:
 	# регаем действие подгрузки вражеского танка
 	actions.set_action(CActionsNPCLoad.new('load'));
 	
+	# скрываем бронированную стену вокруг базы
+	get_node("Map/Base/Armored").visible = false;
+	# у блоков стен
+	for _wall in get_node("Map/Base/Armored").get_children():
+		# удаляем коллизию
+		_wall.set_collision_layer_bit(0, false);
+	
 # раз в кадр
 func _physics_process(delta: float) -> void:
 	# если НЕТ действие
@@ -88,6 +95,10 @@ func has_enemies() -> bool:
 # получить танки врагов
 func get_enemies() -> Array:
 	return CApp.get_tree().get_nodes_in_group("NPC");
+	
+# получить танки игроков
+func get_players() -> Array:
+	return CApp.get_tree().get_nodes_in_group("Players");
 
 # получить следующий вражеский танк
 func get_next_tank() -> Dictionary:

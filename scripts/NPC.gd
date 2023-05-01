@@ -18,6 +18,9 @@ var respawn_point: Vector3;
 # флаг первого кадра
 var _first_frame: bool = true;
 
+# в зоне смерти
+var in_death_zone: bool = false;
+
 # узел готов
 func _ready() -> void:
 	# поднимаем механизм действий

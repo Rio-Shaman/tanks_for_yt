@@ -14,6 +14,9 @@ var lives: int = 3;
 # флаг первого кадра
 var _first_frame: bool = true;
 
+# в зоне смерти
+var in_death_zone: bool = false;
+
 # механизм действий
 var actions: CActions;
 
@@ -24,6 +27,9 @@ func ready() -> void:
 	
 	# назначаем жизней
 	set_lives(3);
+	
+	# определяем танк в группу "Players"
+	add_to_group("Players");
 
 # раз в кадр
 func _physics_process(delta: float) -> void:
@@ -92,3 +98,17 @@ func is_on_ice() -> bool:
 			
 	# в остальных случаях игрок НЕ на льду
 	return false;
+
+# проверка, на воде ли танк
+func is_on_water() -> bool:
+	# листаю детекторы
+	for _child in get_node("WaterDetectors").get_children():
+		# если хотя 1 из детекторов наткнулся на воду
+		if true == _child.is_colliding():
+			# говорим что игрок на воде
+			return true;
+			
+	# в остальных случаях игрок НЕ на воде
+	return false;
+
+
