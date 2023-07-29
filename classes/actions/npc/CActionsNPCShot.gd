@@ -33,6 +33,11 @@ func run(_delta: float) -> void:
 
 # процесс действия
 func process(delta: float) -> void:
+	# если у игроков взят бонус "время"
+	if null != CApp.get_scene().get_active_bonus_by_type(CBonus._TIME):
+		# выходим из процесса
+		return;
+	
 	# метод родителя
 	.process(delta);
 

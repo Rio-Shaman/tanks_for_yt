@@ -1,4 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/models/flags/blue_flag.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/models/flags/red_flag.tscn" type="PackedScene" id=2]
 
 [sub_resource type="GDScript" id=3]
 script/source = "extends CPlayerBase
@@ -32,7 +35,7 @@ func _ready():
 	], true);
 	
 	# метод родителя
-	.ready();
+	.ready(1);
 
 
 
@@ -52,6 +55,12 @@ shape = SubResource( 4 )
 
 [node name="Gun" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.721, -0.803 )
+
+[node name="Flag_Blue" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0.281, 0.815, 0.413 )
+
+[node name="Flag_Red" parent="." instance=ExtResource( 2 )]
+transform = Transform( -1, 7.57103e-08, -4.37114e-08, 0, 0.5, 0.866025, 8.74228e-08, 0.866025, -0.5, -0.277, 0.82, 0.407 )
 
 [node name="IceDetectors" type="Spatial" parent="."]
 

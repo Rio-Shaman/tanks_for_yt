@@ -199,9 +199,25 @@ func get_cell_by_type(type: int, _slice: int = 1) -> Dictionary:
 				_collect.append(
 					_grid[_row][_col]
 				);
-	
+
+	# если рандом
+	if _slice == 0 && _collect.size() > 0:
+		# высчитываем срез
+		_slice = randi() % _collect.size() + 1;
+
 	# возвращаем нужную клетку из массива найденных клеток
 	return _collect[_slice - 1] if _collect.size() > 0 else {};
+
+# есть ли в ячейки узел
+func is_node_in_cell(_node: Node, _cell: Dictionary) -> bool:
+	# если узел пустой
+	if null == _node:
+		# то нет, в ячейке узла нет
+		return false;
+	
+	return _node.global_translation.distance_to(
+		_cell.vector
+	) < get_cell_size().x;
 
 # получаем размер ячейки
 func get_cell_size() -> Vector3:

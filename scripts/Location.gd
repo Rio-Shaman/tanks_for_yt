@@ -15,6 +15,17 @@ var respawns: Array;
 # механизм действий
 var actions: CActions;
 
+# список бонусов
+var _bonuses: Array = [
+	"Upgrade",
+	"Life",
+	"Time",
+	"Destroy",
+	"Base_Armor",
+	"Ship",
+	"Armor"
+];
+
 # инициализация
 func _init():
 	# подгружаем первичные
@@ -128,6 +139,69 @@ func get_next_tank() -> Dictionary:
 		"respawn": _respawn.get("respawn")
 	};
 
+# получить активный бонус на сцене
+func get_active_bonus_by_type(type: int) -> Node:
+	# листаем бонусы
+	for _child in CApp.get_tree().get_nodes_in_group("Bonuses"):
+		# если типы совпадают и в бонус записан игрок
+		if _child.get_type() == type && null != _child.get_player():
+			# возвращаем бонус
+			return _child;
 
+	return null;
+
+# получить все НЕ активные бонусы на сцене
+func get_not_active_bonuses() -> Array:
+	# коллекция бонусов
+	var collect: Array = [];
+	
+	# листаем бонусы
+	for _child in CApp.get_tree().get_nodes_in_group("Bonuses"):
+		# если в бонус НЕ записан игрок
+		if null == _child.get_player():
+			# сохраняем бонус
+			collect.append(_child);
+			
+	return collect;
+
+# сгенерировать бонус
+func generate_bonus() -> void:
+	# бонус
+	var _bonus: Node;
+	# ячейка для спавна бонуса
+	var _cell: Dictionary;
+	# получаем рандомный тип бонуса
+	var _type = randi() % 7;
+	# получаем игроков
+	var players = get_players();
+
+	# листаем все НЕ активные бонусы
+	for _node in get_not_active_bonuses():
+		# уничтожаем бонус
+		_node.free();
+
+	# бесконечный цикл
+	while true:
+		# получаем ячейку
+		_cell = CApp.grid.get_cell_by_type(CApp.grid._BONUS, 0);
+		
+		# если игроков нет на этой ячейке
+		if (false == CApp.grid.is_node_in_cell(players[0], _cell)):
+			# завершаем цикл
+			break;
+
+	# поднимаем бонус по типу
+	_bonus = load(
+		"res://assets/scenes/bonuses/" + _bonuses[_type] + ".tscn"
+	).instance();
+
+	# назначаем координаты ячейки бонусу
+	_bonus.set_translation(_cell.vector);
+
+	# определяем бонус в группу Bonuses
+	_bonus.add_to_group("Bonuses");
+
+	# грузим на сцену
+	add_child(_bonus);
 
 

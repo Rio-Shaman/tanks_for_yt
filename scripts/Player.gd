@@ -17,16 +17,33 @@ var _first_frame: bool = true;
 # в зоне смерти
 var in_death_zone: bool = false;
 
+# активен ли бонус "броня"
+var armor: bool = false;
+
+# активен ли бонус "корабль"
+var ship: bool = false;
+
+# номер игрока
+var number: int;
+
 # механизм действий
 var actions: CActions;
 
 # узел готов
-func ready() -> void:
+func ready(_number: int) -> void:
+	# записываем номер игрока
+	number = _number;
+	
 	# назначаем хп
 	set_hp(1);
 	
 	# назначаем жизней
 	set_lives(3);
+	
+	# прячем синий флга
+	get_node("Flag_Blue").visible = false;
+	# прячем красный флга
+	get_node("Flag_Red").visible = false;
 	
 	# определяем танк в группу "Players"
 	add_to_group("Players");
@@ -45,6 +62,19 @@ func _physics_process(delta: float) -> void:
 
 # нанести урон
 func make_damage(delta: float) -> void:
+	# если активна броня
+	if true == armor:
+		# домаг наносить нельзя
+		# выходим из метода
+		return;
+		
+	# если актиывен "корабль"
+	if true == ship:
+		# снимаем бонус
+		ship = false;
+		# выходим из метода
+		return;
+	
 	# если у танка хп на один удар
 	if hp == 1:
 		# закрываеем все действия

@@ -21,6 +21,9 @@ var _first_frame: bool = true;
 # в зоне смерти
 var in_death_zone: bool = false;
 
+# бонусный ли танк
+var _is_bonus: bool;
+
 # узел готов
 func _ready() -> void:
 	# поднимаем механизм действий
@@ -42,6 +45,17 @@ func _ready() -> void:
 	
 	# регаем действие "стрелять" в потоке один
 	actions.set_thread_action(1, "shot");
+	
+	# шанс того что танк будет бонусный 25%
+	if randi() % 100 < 25:
+		# устанавливаем флаг
+		_is_bonus = true;
+	# если бону НЕ выпал
+	else:
+		# прячем флаг
+		get_node("Flag").visible = false;
+		# устанавливаем флаг
+		_is_bonus = false;
 
 # раз в кадр
 func _physics_process(delta: float) -> void:
@@ -89,6 +103,11 @@ func _physics_process(delta: float) -> void:
 
 # нанести урон
 func make_damage(delta: float) -> void:
+	# если танк бонусный
+	if true == _is_bonus:
+		# генерируем бонус
+		CApp.get_scene().generate_bonus();
+	
 	# если у танка хп на один удар
 	if hp == 1:
 		# стартуем действие "уничтожить танк"

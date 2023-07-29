@@ -26,7 +26,11 @@ func run(_delta: float) -> void:
 	
 # процесс действия
 func process(delta: float) -> void:
-	
+	# если у игроков взят бонус "время"
+	if null != CApp.get_scene().get_active_bonus_by_type(CBonus._TIME):
+		# выходим из процесса
+		return;
+
 	# передвигаем сущность
 	if !_path.empty():
 		# получаем дистанцию которую танк проедет за кадр

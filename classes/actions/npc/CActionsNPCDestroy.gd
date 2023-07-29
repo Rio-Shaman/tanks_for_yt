@@ -42,6 +42,8 @@ func run(_delta: float) -> void:
 	_entity.get_node("CollisionShape").disabled = true;
 	# прячу модель танка
 	_entity.get_node("Tank").visible = false;
+	# прячем флаг
+	_entity.get_node("Flag").visible = false;
 	# запускаем скрипт разрушения
 	_entity.get_node("Parts").destroy();
 
