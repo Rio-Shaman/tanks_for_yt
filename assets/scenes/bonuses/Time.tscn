@@ -22,7 +22,7 @@ func activate() -> void:
 	.activate();
 	
 	# получаем такой же активный бонус
-	var _bonus = _get_similar_bonus();
+	var _bonus = _get_similar_bonus(false);
 	
 	# если бонуса НЕТ
 	if null == _bonus:

@@ -72,7 +72,7 @@ func get_player() -> KinematicBody:
 	return _player;
 
 # получить аналогичный бонус
-func _get_similar_bonus() -> Node:
+func _get_similar_bonus(_by_player: bool = true) -> Node:
 	# листаем бонусы
 	for _child in CApp.get_tree().get_nodes_in_group("Bonuses"):
 		# если ...
@@ -82,7 +82,7 @@ func _get_similar_bonus() -> Node:
 			# ... типы совпадают
 			&&	_child.get_type() == get_type()
 			# ... сопадает игрок
-			&&	_child.get_player() == get_player()
+			&&	(false == _by_player || _child.get_player() == get_player())
 		):
 			# возвращаем узел
 			return _child;
