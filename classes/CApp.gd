@@ -24,7 +24,7 @@ var volume: float = 0;
 # узел готов
 func _ready() -> void:
 	# скрыть мышь
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN);
+	#Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN);
 	
 	# НЕ ставить процессм на паузу
 	set_pause_mode(PAUSE_MODE_PROCESS);
