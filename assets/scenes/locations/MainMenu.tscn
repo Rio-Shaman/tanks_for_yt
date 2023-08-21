@@ -12,7 +12,6 @@
 [ext_resource path="res://assets/models/tanks/tank_npc_2.tscn" type="PackedScene" id=10]
 [ext_resource path="res://assets/logos/logo_1.png" type="Texture" id=11]
 [ext_resource path="res://assets/fonts/normal.tres" type="DynamicFont" id=12]
-[ext_resource path="res://scripts/Menu.gd" type="Script" id=13]
 
 [sub_resource type="GDScript" id=3]
 script/source = "extends Spatial
@@ -31,32 +30,77 @@ func _ready() -> void:
 		CApp.paused();
 "
 
-[sub_resource type="GDScript" id=4]
-script/source = "extends MainMenuPoint
+[sub_resource type="GDScript" id=7]
+script/source = "extends VBoxContainer
 
+# имя сущности
+export(String) var entity_name;
+
+# механизм действий
+var actions: CActions
+
+# объект меню
+var menu: CMenu;
+
+# узел готов
+func _ready() -> void:
+	# поднимаем менюху
+	menu = CMenu.new(self, entity_name);
+"
+
+[sub_resource type="GDScript" id=8]
+script/source = "extends Label
+
+# деактивировать кнопку
+func deactivate() -> void:
+	# прячем курсор
+	set(\"custom_colors/font_color\", Color(1,1,1,0.5));
+	
 # активировать кнопку
+func activate() -> void:
+	# отображаем курсор
+	set(\"custom_colors/font_color\", Color(1,1,1,1));
+	
+# выбор пункта
 func select() -> void:
-	# запускаем первый уровень
 	CApp.change_scene(
 		\"res://assets/scenes/locations/Level_1.tscn\"
 	);
-
 "
 
-[sub_resource type="GDScript" id=5]
-script/source = "extends MainMenuPoint
+[sub_resource type="GDScript" id=9]
+script/source = "extends Label
 
+# деактивировать кнопку
+func deactivate() -> void:
+	# прячем курсор
+	set(\"custom_colors/font_color\", Color(1,1,1,0.5));
+	
 # активировать кнопку
+func activate() -> void:
+	# отображаем курсор
+	set(\"custom_colors/font_color\", Color(1,1,1,1));
+	
+# выбор пункта
 func select() -> void:
-	print(\"Выбрали свой Coop\");
+	print(\"Игра на двоих\");
 "
 
-[sub_resource type="GDScript" id=6]
-script/source = "extends MainMenuPoint
+[sub_resource type="GDScript" id=10]
+script/source = "extends Label
 
+# деактивировать кнопку
+func deactivate() -> void:
+	# прячем курсор
+	set(\"custom_colors/font_color\", Color(1,1,1,0.5));
+	
 # активировать кнопку
+func activate() -> void:
+	# отображаем курсор
+	set(\"custom_colors/font_color\", Color(1,1,1,1));
+	
+# выбор пункта
 func select() -> void:
-	# выйти из игры
 	CApp.quit();
 "
 
@@ -88,9 +132,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -261.5
-margin_top = -124.0
+margin_top = -163.0
 margin_right = 261.5
-margin_bottom = 124.0
+margin_bottom = 163.0
 
 [node name="TextureRect" type="TextureRect" parent="Control/ColorRect/VBoxContainer"]
 margin_right = 523.0
@@ -106,7 +150,7 @@ margin_bottom = 326.0
 margin_left = 224.0
 margin_right = 298.0
 margin_bottom = 74.0
-script = ExtResource( 13 )
+script = SubResource( 7 )
 entity_name = "main_menu"
 
 [node name="One" type="Label" parent="Control/ColorRect/VBoxContainer/CenterContainer/Menu"]
@@ -117,9 +161,7 @@ custom_fonts/font = ExtResource( 12 )
 text = "1 Игрок"
 valign = 1
 uppercase = true
-script = SubResource( 4 )
-_next = NodePath("../Coop")
-_previous = NodePath("../Quit")
+script = SubResource( 8 )
 
 [node name="Coop" type="Label" parent="Control/ColorRect/VBoxContainer/CenterContainer/Menu"]
 margin_top = 26.0
@@ -130,9 +172,7 @@ custom_fonts/font = ExtResource( 12 )
 text = "2 Игрока"
 valign = 1
 uppercase = true
-script = SubResource( 5 )
-_next = NodePath("../Quit")
-_previous = NodePath("../One")
+script = SubResource( 9 )
 
 [node name="Quit" type="Label" parent="Control/ColorRect/VBoxContainer/CenterContainer/Menu"]
 margin_top = 52.0
@@ -143,9 +183,7 @@ custom_fonts/font = ExtResource( 12 )
 text = "Выход"
 valign = 1
 uppercase = true
-script = SubResource( 6 )
-_next = NodePath("../One")
-_previous = NodePath("../Coop")
+script = SubResource( 10 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -14 )

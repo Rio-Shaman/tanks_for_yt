@@ -139,15 +139,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/CGrid.gd"
 }, {
+"base": "Reference",
+"class": "CMenu",
+"language": "GDScript",
+"path": "res://classes/CMenu.gd"
+}, {
 "base": "KinematicBody",
 "class": "CPlayerBase",
 "language": "GDScript",
 "path": "res://scripts/Player.gd"
-}, {
-"base": "Node",
-"class": "CPoint",
-"language": "GDScript",
-"path": "res://scripts/Point.gd"
 }, {
 "base": "Reference",
 "class": "CThread",
@@ -158,11 +158,6 @@ _global_script_classes=[ {
 "class": "CTmp",
 "language": "GDScript",
 "path": "res://classes/CTmp.gd"
-}, {
-"base": "CPoint",
-"class": "MainMenuPoint",
-"language": "GDScript",
-"path": "res://scripts/MainMenuPoint.gd"
 } ]
 _global_script_class_icons={
 "CActionBase": "",
@@ -191,11 +186,10 @@ _global_script_class_icons={
 "CControl": "",
 "CControlRule": "",
 "CGrid": "",
+"CMenu": "",
 "CPlayerBase": "",
-"CPoint": "",
 "CThread": "",
-"CTmp": "",
-"MainMenuPoint": ""
+"CTmp": ""
 }
 
 [application]

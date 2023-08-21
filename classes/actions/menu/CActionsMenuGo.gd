@@ -18,10 +18,10 @@ func run(_delta: float) -> void:
 # окончание действия
 func end() -> void:
 	# получаем активную кнопку
-	var _button = _entity.get_current_button();
+	var _button = _entity.menu.get_current_button();
 	
-	# деактивируем текущую кнопку
-	_button.deactivate();
+	# деактивируем активную кнопку
+	_entity.menu.deactivate(_button);
 	
 	# отностельно напраления
 	# переключаем активность кнопок
@@ -29,11 +29,15 @@ func end() -> void:
 		# если вверх
 		"up":
 			# активируем пред кнопку
-			_button.get_node(_button.get_previous()).activate();
+			_entity.menu.activate(
+				_entity.menu.get_previous(_button)
+			);
 		# если вниз
 		"down":
 			# активируем след кнопку
-			_button.get_node(_button.get_next()).activate();
+			_entity.menu.activate(
+				_entity.menu.get_next(_button)
+			);
 
 	# метод родителя
 	.end();

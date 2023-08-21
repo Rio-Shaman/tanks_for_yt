@@ -13,12 +13,8 @@ func run(_delta: float) -> void:
 
 # окончание действия
 func end() -> void:
-	
-	# получаем активную кнопку
-	var _button = _entity.get_current_button();
-	
 	# вызываю обработчик
-	_button.select();
-	
+	_entity.menu.select();
+
 	# метод родитель
 	.end();
