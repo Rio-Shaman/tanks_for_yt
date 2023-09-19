@@ -19,7 +19,7 @@ func activate() -> void:
 	_player.set_lives(_player.lives + 1);
 	
 	# устанавиваем кол-во жизней в интерфейсе
-	print(_player.lives);
+	_player.set_lives_in_ui();
 
 	# деактивируем бонус
 	deactivate();

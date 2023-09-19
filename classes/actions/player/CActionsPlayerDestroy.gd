@@ -63,6 +63,8 @@ func end() -> void:
 	_entity.global_translation = _respawn_point;
 	# уменьшаем кол-во жизней
 	_entity.set_lives(_entity.lives - 1);
+	# устанавиваем кол-во жизней в интерфейсе
+	_entity.set_lives_in_ui();
 	
 	# если жизней более нуля
 	if _entity.lives > 0:

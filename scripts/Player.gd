@@ -40,6 +40,9 @@ func ready(_number: int) -> void:
 	# назначаем жизней
 	set_lives(3);
 	
+	# обновляем жизни в UI
+	set_lives_in_ui();
+	
 	# прячем синий флга
 	get_node("Flag_Blue").visible = false;
 	# прячем красный флга
@@ -141,4 +144,18 @@ func is_on_water() -> bool:
 	# в остальных случаях игрок НЕ на воде
 	return false;
 
+# установить кол-во жизней в интерфейс
+func set_lives_in_ui() -> void:
+	# если второй игрок НЕ активен
+		# выходим из метода
+		# return;
+	
+	# записываем кол-во жизней в бар
+	CApp.get_scene().get_node(
+		"Map/UI/Bar_" + String(number) + "/HBoxContainer/Lives"
+	).set_text(
+		String(lives)
+	);
+	
+	
 
