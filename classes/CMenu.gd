@@ -27,7 +27,7 @@ func _init(entity: Object, name: String) -> void:
 		[
 			CControlRule.new("up", "ui_player_1_up", "ui_player_1_up"),
 			CControlRule.new("down", "ui_player_1_down", "ui_player_1_down"),
-			CControlRule.new("select", "ui_accept", "ui_accept")
+			CControlRule.new("select", "ui_player_1_accept", "ui_player_1_accept")
 		]
 	], true);
 	

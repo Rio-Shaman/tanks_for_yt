@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://assets/models/navigation/Point.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/scenes/world/Wall_1.tscn" type="PackedScene" id=2]
@@ -54,6 +54,48 @@ func _on_body_exited(_body: Node) -> void:
 
 [sub_resource type="BoxShape" id=12]
 extents = Vector3( 2, 1, 2 )
+
+[sub_resource type="GDScript" id=13]
+script/source = "extends Control
+
+# механизм действий
+var actions: CActions;
+
+# узел готов
+func _ready() -> void:
+	# прячем окно
+	visible = false;
+	
+	# механизм действий
+	actions = CActions.new(self);
+	
+	# регистрация действий
+	actions.set_action(CActionsWindowClose.new(\"close\", self));
+	
+	# регаем действия для первого контроллера
+	CApp.control_1.set_entity('pause', self, [
+		[
+			CControlRule.new(\"close\", \"ui_player_1_accept\", \"ui_player_1_accept\")
+		]
+	]);
+
+# открыть окно
+func open() -> void:
+	# показываем окно
+	visible = true;
+	
+	# переключаем сущность
+	CApp.control_1.set_current_entity(\"pause\");
+	
+# закрыть окно
+func close() -> void:
+	# прячем окно
+	visible = false;
+	
+	# закрываем текущую сущность
+	CApp.control_1.close_current_entity();
+	
+"
 
 [node name="Map" type="Spatial"]
 
@@ -803,6 +845,33 @@ shape = SubResource( 12 )
 [node name="UI" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+
+[node name="Pause" type="Control" parent="UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource( 13 )
+
+[node name="BG" type="ColorRect" parent="UI/Pause"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 50.0
+margin_top = 50.0
+margin_right = -50.0
+margin_bottom = -50.0
+color = Color( 0, 0, 0, 0.498039 )
+
+[node name="Label" type="Label" parent="UI/Pause/BG"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -45.0
+margin_top = -21.0
+margin_right = 45.0
+margin_bottom = 21.0
+custom_fonts/font = ExtResource( 7 )
+text = "Пауза"
+uppercase = true
 
 [node name="Bar_1" type="Control" parent="UI"]
 anchor_right = 1.0
