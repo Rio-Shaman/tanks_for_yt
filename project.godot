@@ -50,6 +50,16 @@ _global_script_classes=[ {
 "path": "res://classes/actions/bonus/CActionsBonusTime.gd"
 }, {
 "base": "CActionBase",
+"class": "CActionsGameNext",
+"language": "GDScript",
+"path": "res://classes/actions/game/CActionsGameNext.gd"
+}, {
+"base": "CActionBase",
+"class": "CActionsGameRestart",
+"language": "GDScript",
+"path": "res://classes/actions/game/CActionsGameRestart.gd"
+}, {
+"base": "CActionBase",
 "class": "CActionsMenuGo",
 "language": "GDScript",
 "path": "res://classes/actions/menu/CActionsMenuGo.gd"
@@ -178,6 +188,8 @@ _global_script_class_icons={
 "CActionsBonusBaseArmor": "",
 "CActionsBonusShip": "",
 "CActionsBonusTime": "",
+"CActionsGameNext": "",
+"CActionsGameRestart": "",
 "CActionsMenuGo": "",
 "CActionsMenuSelect": "",
 "CActionsNPCDestroy": "",

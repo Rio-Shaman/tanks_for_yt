@@ -34,6 +34,12 @@ func _init():
 
 # узел готов
 func _ready() -> void:
+	
+	# если игра на паузе
+	if true == CApp.is_paused():
+		# снимаем паузу
+		CApp.paused();
+	
 	# загружаем сетку
 	CApp.grid.load_grid();
 	
@@ -72,9 +78,15 @@ func _physics_process(delta: float) -> void:
 		# продолжаем исполнять действие
 		actions.get_current_action().process(delta);
 	
-	# если на карте нет врагов и ангар пуст
-	if false == has_enemies() && true == respawns_empty():
-		print("на след уровень!");
+	# если игра окончена
+	if is_game_over():
+		# запускаем действие "гейм овер"
+		game_over(delta);
+	
+	# если нужно произвести переход на след уровень
+	elif is_next_level():
+		# запускаем действие "итоги"
+		next_level(delta);
 
 # получить данные респа
 func get_respawn_data(string: String) -> Array:
@@ -204,4 +216,51 @@ func generate_bonus() -> void:
 	# грузим на сцену
 	add_child(_bonus);
 
+# нужно ли переходить на след уровень
+func is_next_level() -> bool:
+	# если на карте нет врагов и ангар пуст
+	return false == has_enemies() && true == respawns_empty();
+
+# нужно ли открывать окно гейм овера
+func is_game_over() -> bool:
+	# если нет игроков
+	if CApp.get_scene().get_node("Player_1").lives == 0:
+		# то игра окончена
+		return true;
+	
+	# если уничтоженна база
+	if !CApp.get_scene().has_node("Map/Base/Eagle"):
+		# то игра окончена
+		return true;
+	
+	# продолжаем игру
+	return false;
+
+# игра окончена
+func game_over(delta: float) -> void:
+	# завершаем все действия
+	CApp.get_scene().get_node("Player_1").actions.end_all_actions();
+	
+	# запускаем действие "открыть окно гейм овер"
+	CApp.control_1.get_current_entity().actions.set_current_action(
+		"gameover",
+		delta
+	);
+	
+	# завершаем действие руками
+	CApp.control_1.get_current_entity().actions.end_action("gameover");
+
+# следующий уровень
+func next_level(delta: float) -> void:
+	# завершаем все действия
+	CApp.get_scene().get_node("Player_1").actions.end_all_actions();
+	
+	# запускаем действие "открыть окно итогов"
+	CApp.control_1.get_current_entity().actions.set_current_action(
+		"congratulation",
+		delta
+	);
+	
+	# завершаем действие руками
+	CApp.control_1.get_current_entity().actions.end_action("congratulation");
 

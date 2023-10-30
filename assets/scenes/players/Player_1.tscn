@@ -10,7 +10,11 @@ script/source = "extends CPlayerBase
 func _ready():
 	# окно паузы
 	var window_pause = CApp.get_scene().get_node(\"Map/UI/Pause\");
-	
+	# окно гейм овер
+	var window_gameover = CApp.get_scene().get_node(\"Map/UI/GameOver\");
+	# окно итоги
+	var window_congratulation = CApp.get_scene().get_node(\"Map/UI/Congratulation\");
+
 	# поднимаем механизм
 	actions = CActions.new(self);
 	
@@ -24,6 +28,8 @@ func _ready():
 	actions.set_action(CActionsPlayerDestroy.new(\"destroy\"));
 	actions.set_action(CActionsPlayerRespawn.new(\"respawn\"));
 	actions.set_action(CActionsWindowOpen.new(\"pause\", window_pause));
+	actions.set_action(CActionsWindowOpen.new(\"gameover\", window_gameover));
+	actions.set_action(CActionsWindowOpen.new(\"congratulation\", window_congratulation));
 	
 	# регаем первого игрока в контроллере
 	CApp.control_1.set_entity('player', self, [
