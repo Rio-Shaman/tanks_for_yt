@@ -10,6 +10,9 @@ func _init(name: String).(name) -> void:
 func end() -> void:
 	# метод родителя
 	.end();
-	
+
+	# сбрасываем буфер
+	CApp.tmp.clear_buffer();
+
 	# начальный экран
 	CApp.change_scene("res://assets/scenes/locations/MainMenu.tscn");

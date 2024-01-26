@@ -35,10 +35,14 @@ func ready(_number: int) -> void:
 	number = _number;
 	
 	# назначаем хп
-	set_hp(1);
+	set_hp(
+		int(CApp.get_from_tmp("player" + String(number) + ".hp", "1"))
+	);
 	
 	# назначаем жизней
-	set_lives(3);
+	set_lives(
+		int(CApp.get_from_tmp("player" + String(number) + ".lives", "3"))
+	);
 	
 	# обновляем жизни в UI
 	set_lives_in_ui();
@@ -96,11 +100,18 @@ func make_damage(delta: float) -> void:
 func set_hp(value: int) -> void:
 	# назначаю новое хп
 	hp = value;
+	# сохраняем в темп
+	CApp.save_in_tmp("player" + String(number) + ".hp", String(hp));
 	
 # установить кол-во жизней
 func set_lives(value: int) -> void:
 	# назначаю новое значение
 	lives = value;
+	# пишем в темп
+	CApp.save_in_tmp(
+		"player" + String(number) + ".lives",
+		String(lives)
+	);
 
 # обновление танка
 func update() -> void:

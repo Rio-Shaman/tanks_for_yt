@@ -29,6 +29,9 @@ func _ready() -> void:
 	# НЕ ставить процессм на паузу
 	set_pause_mode(PAUSE_MODE_PROCESS);
 	
+	# поднимаем темп
+	tmp = CTmp.new();
+	
 # загрузка данных для сцены
 func load_scene() -> void:
 	# контролы
@@ -68,11 +71,11 @@ func change_scene(scene: String) -> void:
 # получить данные из темпа
 func get_from_tmp(param: String, default: String = "") -> String:
 	# значение
-	return "";
+	return tmp.get_value(param, default);
 
 # сохраняем данные в темп
 func save_in_tmp(param: String, value: String) -> void:
-	pass;
+	tmp.set_value(param, value);
 
 # получить текущую сцену
 func get_scene() -> Node:
@@ -81,7 +84,4 @@ func get_scene() -> Node:
 # выход из игры
 func quit() -> void:
 	get_tree().quit();
-
-
-
 
