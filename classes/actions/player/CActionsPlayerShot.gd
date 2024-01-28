@@ -25,7 +25,10 @@ func run(_delta: float) -> void:
 	
 	# настраиваем позицию снаряда
 	_shell.global_transform = _entity.get_node("Gun").global_transform;
-	
+
+	# сохраняем того кто стрелял
+	_shell.who = _entity;
+
 	# снаряд полетел
 	_valid = true;
 	

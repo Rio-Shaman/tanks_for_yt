@@ -62,7 +62,7 @@ func end() -> void:
 		&&	_is_colliding.collider.has_method("make_damage")
 	):
 		# запускаем метод
-		_is_colliding.collider.make_damage(_delta);
+		_is_colliding.collider.make_damage(_entity.who, _delta);
 	
 	# удаляем снаряд
 	_entity.queue_free();

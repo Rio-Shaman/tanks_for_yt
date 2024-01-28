@@ -68,7 +68,7 @@ func _physics_process(delta: float) -> void:
 		_first_frame = false;
 
 # нанести урон
-func make_damage(delta: float) -> void:
+func make_damage(_npc: KinematicBody, delta: float) -> void:
 	# если активна броня
 	if true == armor:
 		# домаг наносить нельзя
@@ -168,5 +168,17 @@ func set_lives_in_ui() -> void:
 		String(lives)
 	);
 	
+# сохраняем очки игрока
+func save_score(entity: Node) -> void:
+	# блок с числом
+	var _score = load("res://assets/scenes/bonuses/Score.tscn").instance();
+	# заполняем текст
+	_score.get_node("Label").set_text(String(entity.score));
+	# подставляем координаты
+	_score.translation = Vector3(entity.translation.x, 0, entity.translation.z);
 	
+	# грузим на сцену
+	CApp.get_scene().add_child(_score);
+	
+	#
 

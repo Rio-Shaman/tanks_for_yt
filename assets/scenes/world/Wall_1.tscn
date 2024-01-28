@@ -25,7 +25,7 @@ func _physics_process(delta: float):
 		actions.get_current_action().process(delta);
 		
 # нанести урон
-func make_damage(delta: float) -> void:
+func make_damage(_who: KinematicBody, delta: float) -> void:
 	# стартуем действие \"уничтожить стену\"
 	actions.set_current_action(\"destroy\", delta);
 "

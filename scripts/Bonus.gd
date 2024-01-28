@@ -25,6 +25,9 @@ var _player: KinematicBody;
 # дельта
 var _delta: float;
 
+# кол-во очков
+var score: int = 200;
+
 # узел готов
 func _ready():
 	# поднимаем механизм действий
@@ -49,6 +52,8 @@ func activate() -> void:
 	get_node("CollisionShape").disabled = true;
 	# делаем бонус не видимым
 	visible = false;
+	# накидываем очки за бонус
+	_player.save_score(self);
 	
 # деактивация бонуса
 func deactivate() -> void:

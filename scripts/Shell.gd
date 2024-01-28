@@ -6,6 +6,9 @@ var actions: CActions;
 # скорость передвижения
 var speed: float = 10;
 
+# кто стрелял
+var who = KinematicBody;
+
 # узел готов
 func _ready() -> void:
 	# поднимаем механизм действий

@@ -24,6 +24,9 @@ var in_death_zone: bool = false;
 # бонусный ли танк
 var _is_bonus: bool;
 
+# кол-во очков за уничтожение
+var score: int;
+
 # узел готов
 func _ready() -> void:
 	# поднимаем механизм действий
@@ -102,7 +105,7 @@ func _physics_process(delta: float) -> void:
 			actions.get_current_action(1).process(delta);
 
 # нанести урон
-func make_damage(delta: float) -> void:
+func make_damage(player: KinematicBody, delta: float) -> void:
 	# если танк бонусный
 	if true == _is_bonus:
 		# генерируем бонус
@@ -110,6 +113,9 @@ func make_damage(delta: float) -> void:
 	
 	# если у танка хп на один удар
 	if hp == 1:
+		# накидываем очки за унчистожение NPC
+		player.save_score(self);
+		
 		# стартуем действие "уничтожить танк"
 		actions.set_current_action("destroy", delta);
 	
