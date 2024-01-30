@@ -264,3 +264,10 @@ func next_level(delta: float) -> void:
 	# завершаем действие руками
 	CApp.control_1.get_current_entity().actions.end_action("congratulation");
 
+# расчет очков
+func scoring(_win: Node) -> void:
+	# листаем игроков
+	for player in get_players():
+		# вызываю подсчет очков
+		player.scoring(_win);
+	

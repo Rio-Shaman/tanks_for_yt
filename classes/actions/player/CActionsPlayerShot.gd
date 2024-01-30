@@ -28,6 +28,9 @@ func run(_delta: float) -> void:
 
 	# сохраняем того кто стрелял
 	_shell.who = _entity;
+	
+	# скорость снаряда
+	_shell.speed = 15 if _entity.hp == 3 else 10;
 
 	# снаряд полетел
 	_valid = true;

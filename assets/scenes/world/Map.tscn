@@ -127,6 +127,9 @@ func _ready() -> void:
 
 # открыть окно
 func open() -> void:
+	# подсчет очков
+	CApp.get_scene().scoring(self);
+	
 	# показываем окно
 	visible = true;
 	
@@ -161,6 +164,9 @@ func _ready() -> void:
 
 # открыть окно
 func open() -> void:
+	# подсчет очков
+	CApp.get_scene().scoring(self);
+	
 	# показываем окно
 	visible = true;
 	

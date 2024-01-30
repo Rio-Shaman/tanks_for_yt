@@ -75,7 +75,13 @@ func get_from_tmp(param: String, default: String = "") -> String:
 
 # сохраняем данные в темп
 func save_in_tmp(param: String, value: String) -> void:
+	# сохраняем
 	tmp.set_value(param, value);
+	
+# удаляем данные из темпа
+func destroy_from_tmp(param: String) -> void:
+	# удаляем параметр
+	tmp.destroy_value(param);
 
 # получить текущую сцену
 func get_scene() -> Node:

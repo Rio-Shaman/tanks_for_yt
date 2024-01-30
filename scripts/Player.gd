@@ -122,8 +122,11 @@ func update() -> void:
 	
 	# получаем новую модель танка
 	var _tank = load(
-		"res://assets/models/tanks/tank_1_" + String(hp) + ".tscn"
+		"res://assets/models/tanks/tank_" + String(number) + "_" + String(hp) + ".tscn"
 	).instance();
+	
+	# скорость танка от типа
+	speed = 6 if hp == 3 else 5;
 	
 	# даем конкретное имя узлу
 	_tank.set_name("Tank");
@@ -180,5 +183,71 @@ func save_score(entity: Node) -> void:
 	# грузим на сцену
 	CApp.get_scene().add_child(_score);
 	
-	#
+	# группа в темп
+	var _group = "player" + String(number);
+	# текущие очки игрока
+	var _scores = {
+		"npc_1": int(CApp.get_from_tmp(_group + ".score_1", "0")),
+		"npc_2": int(CApp.get_from_tmp(_group + ".score_2", "0")),
+		"npc_3": int(CApp.get_from_tmp(_group + ".score_3", "0")),
+		"bonuses": int(CApp.get_from_tmp(_group + ".score_bonuses", "0")),
+	};
+	
+	# по классу определяем, что перед нами ...
+	match(entity.get_class()):
+		# ... npc
+		"KinematicBody":
+			# сохраняем очки в группу playerN.score_Y
+			CApp.save_in_tmp(
+				_group + ".score_" + String(entity.type),
+				String(_scores.get("npc_" + String(entity.type)) + entity.score)
+			);
+		
+		# ... бонус
+		"Area":
+			# сохраняем очки в группу playerN.score_bonuses
+			CApp.save_in_tmp(
+				_group + ".score_bonuses",
+				String(_scores.get("bonuses") + entity.score)
+			);
+
+# подсчитываем очки игрока
+func scoring(_win: Node) -> void:
+	# имя узла игрока
+	var _node = "Player_" + String(number);
+	# группа в темп
+	var _group = "player" + String(number);
+	# текущий тотал игрока
+	var _total = int(CApp.get_from_tmp(_group + ".score_total", "0"));
+
+	# выводим очки в блок "бонусы"
+	_win.get_node("BG/Total/Bonus/" + _node).set_text(
+		CApp.get_from_tmp(_group + ".score_bonuses", "0")
+	);
+	
+	# выводим очки в блок "NPC_N"
+	for _n in ["1", "2", "3"]:
+		_win.get_node("BG/Total/Statistics/" + _node + "/NPC_" + _n).set_text(
+			CApp.get_from_tmp(_group + ".score_" + _n, "0")
+		);
+		
+	# пересчитываем тотал игрока
+	_total += (
+		  int(CApp.get_from_tmp(_group + ".score_bonuses", "0"))
+		+ int(CApp.get_from_tmp(_group + ".score_1", "0"))
+		+ int(CApp.get_from_tmp(_group + ".score_2", "0"))
+		+ int(CApp.get_from_tmp(_group + ".score_3", "0"))
+	);
+	
+	# сохраняю тотал для прогресса
+	CApp.save_in_tmp(_group + ".score_total", String(_total));
+
+	# выводим очки в блок "тотал"
+	_win.get_node("BG/Total/Statistics/" + _node + "/Total").set_text(
+		CApp.get_from_tmp(_group + ".score_total", String(_total))
+	);
+	
+	# удаляем из темп блоки "бонусы" и "npc_N"
+	for _n in ["bonuses", "1", "2", "3"]:
+		CApp.destroy_from_tmp(_group + ".score_" + _n);
 
