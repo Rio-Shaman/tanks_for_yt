@@ -23,7 +23,7 @@ func _init(entity: Object, name: String) -> void:
 	_entity.actions.set_action(CActionsMenuSelect.new("select"));
 
 	# регаем менюху в контроллере
-	CApp.control_1.set_entity(name, _entity, [
+	CApp.control.set_entity(name, _entity, [
 		[
 			CControlRule.new("up", "ui_player_1_up", "ui_player_1_up"),
 			CControlRule.new("down", "ui_player_1_down", "ui_player_1_down"),

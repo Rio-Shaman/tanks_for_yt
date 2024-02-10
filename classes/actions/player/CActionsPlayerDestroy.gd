@@ -54,9 +54,9 @@ func end() -> void:
 	_entity.get_node("Parts").free();
 	
 	# получаем точку респа
-	var _respawn_point = (
-		CApp.grid.get_cell_by_type(CApp.grid._PLAYER_1).vector
-	);
+	var _respawn_point = CApp.grid.get_cell_by_type(
+		CApp.grid._PLAYER_1 if _entity.number == 1 else CApp.grid._PLAYER_2
+	).vector;
 	# двигаю танк в ангар
 	_respawn_point = _respawn_point + Vector3(0, 0, 2 * CApp.grid.get_cell_size().z)
 	# устанавливаем стратовые координаты танка

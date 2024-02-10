@@ -32,23 +32,37 @@ func _ready():
 	actions.set_action(CActionsWindowOpen.new(\"congratulation\", window_congratulation));
 	
 	# регаем игрока в контроллере
-	#CApp.control.set_entity('player', self, [
-	#	[
-	#		CControlRule.new(\"up\", \"ui_player_1_up\", \"ui_player_1_up\"),
-	#		CControlRule.new(\"down\", \"ui_player_1_down\", \"ui_player_1_down\"),
-	#		CControlRule.new(\"left\", \"ui_player_1_left\", \"ui_player_1_left\"),
-	#		CControlRule.new(\"right\", \"ui_player_1_right\", \"ui_player_1_right\")
-	#	],
-	#	[
-	#		CControlRule.new(\"shot\", \"ui_player_1_shot\")
-	#	],
-	#	[
-	#		CControlRule.new(\"pause\", \"ui_player_1_accept\", \"ui_player_1_accept\")
-	#	]
-	#], true);
+	CApp.control.set_entity('player', self, [
+		[
+			CControlRule.new(\"up\", \"ui_player_1_up\", \"ui_player_1_up\"),
+			CControlRule.new(\"down\", \"ui_player_1_down\", \"ui_player_1_down\"),
+			CControlRule.new(\"left\", \"ui_player_1_left\", \"ui_player_1_left\"),
+			CControlRule.new(\"right\", \"ui_player_1_right\", \"ui_player_1_right\")
+		],
+		[
+			CControlRule.new(\"shot\", \"ui_player_1_shot\")
+		],
+		[
+			CControlRule.new(\"pause\", \"ui_player_1_accept\", \"ui_player_1_accept\")
+		]
+	], true);
+	
+	# 2-ой игрок должен коллизиться с ...
+	# ... игрок 1
+	set_collision_mask_bit(1, true);
+	# ... НПС
+	set_collision_mask_bit(4, true);
+	# ... вода
+	set_collision_mask_bit(8, true);
+	
+	# если 2-ой игрок на \"мир\" 1
+	if true == is_bot(2):
+		# включаем коллизию с бонусами
+		set_collision_mask_bit(9, true);
+		
 	
 	# метод родителя
-	.ready(1);
+	.ready(2);
 
 
 
@@ -57,8 +71,8 @@ func _ready():
 [sub_resource type="BoxShape" id=4]
 extents = Vector3( 0.698663, 0.449871, 1 )
 
-[node name="Player_1" type="KinematicBody"]
-collision_layer = 2
+[node name="Player_2" type="KinematicBody"]
+collision_layer = 4
 collision_mask = 0
 script = SubResource( 3 )
 

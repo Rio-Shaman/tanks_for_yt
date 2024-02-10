@@ -224,7 +224,13 @@ func is_next_level() -> bool:
 # нужно ли открывать окно гейм овера
 func is_game_over() -> bool:
 	# если нет игроков
-	if CApp.get_scene().get_node("Player_1").lives == 0:
+	if (
+			CApp.get_scene().get_node("Player_1").lives == 0
+		&&	(
+				CApp.get_from_tmp("player2.active", "0") == "0"
+			||	CApp.get_scene().get_node("Player_2").lives == 0
+		)
+	):
 		# то игра окончена
 		return true;
 	
@@ -240,29 +246,31 @@ func is_game_over() -> bool:
 func game_over(delta: float) -> void:
 	# завершаем все действия
 	CApp.get_scene().get_node("Player_1").actions.end_all_actions();
+	CApp.get_scene().get_node("Player_2").actions.end_all_actions();
 	
 	# запускаем действие "открыть окно гейм овер"
-	CApp.control_1.get_current_entity().actions.set_current_action(
+	CApp.control.get_current_entity().actions.set_current_action(
 		"gameover",
 		delta
 	);
 	
 	# завершаем действие руками
-	CApp.control_1.get_current_entity().actions.end_action("gameover");
+	CApp.control.get_current_entity().actions.end_action("gameover");
 
 # следующий уровень
 func next_level(delta: float) -> void:
 	# завершаем все действия
 	CApp.get_scene().get_node("Player_1").actions.end_all_actions();
+	CApp.get_scene().get_node("Player_2").actions.end_all_actions();
 	
 	# запускаем действие "открыть окно итогов"
-	CApp.control_1.get_current_entity().actions.set_current_action(
+	CApp.control.get_current_entity().actions.set_current_action(
 		"congratulation",
 		delta
 	);
 	
 	# завершаем действие руками
-	CApp.control_1.get_current_entity().actions.end_action("congratulation");
+	CApp.control.get_current_entity().actions.end_action("congratulation");
 
 # расчет очков
 func scoring(_win: Node) -> void:

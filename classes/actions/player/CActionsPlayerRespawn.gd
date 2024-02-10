@@ -18,9 +18,9 @@ func run(_delta: float) -> void:
 # процесс действия
 func process(delta: float) -> void:
 	# получаем точку респа
-	var _respawn_point = (
-		CApp.grid.get_cell_by_type(CApp.grid._PLAYER_1).vector
-	);
+	var _respawn_point = CApp.grid.get_cell_by_type(
+		CApp.grid._PLAYER_1 if _entity.number == 1 else CApp.grid._PLAYER_2
+	).vector;
 	
 	# получаем дистанцию которую танк проедет за кадр
 	var _distance = delta * _entity.speed;

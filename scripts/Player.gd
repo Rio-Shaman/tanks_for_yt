@@ -251,3 +251,28 @@ func scoring(_win: Node) -> void:
 	for _n in ["bonuses", "1", "2", "3"]:
 		CApp.destroy_from_tmp(_group + ".score_" + _n);
 
+# является ли игрок ботом
+func is_bot(_n: int = -1) -> bool:
+	# если игра оффлайн
+	if false == CApp.is_online():
+		# игрок точне НЕ бот
+		return false;
+		
+	# если номер игрока еще НЕ определен
+	# получаем напрямую из _n
+	var _number = number if _n == -1 else _n;
+	
+	# если "мир" 1 и игрок (_number) равен 2
+	if true == CApp.is_master() && _number == 2:
+		# то игрок _number является ботом
+		return true;
+		
+	# если "мир" 2 и игрок (_number) равен 1
+	if false == CApp.is_master() && _number == 1:
+		# то игрок _number является ботом
+		return true;
+	
+	# в остальных случаях НЕ бот
+	return false;
+
+

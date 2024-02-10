@@ -3,11 +3,8 @@ extends Node
 # флаг загрузки данных для сцены
 var _is_loaded_scene: bool = false;
 
-# контрол первого игрока
-var control_1: CControl;
-
-# контрол второго игрока
-var control_2: CControl;
+# контрол игрока
+var control: CControl;
 
 # сетка
 var grid: CGrid;
@@ -20,6 +17,9 @@ var audio: CAudio;
 
 # громкость
 var volume: float = 0;
+
+# является ли "мир" сервером
+var _is_server: bool = false;
 
 # узел готов
 func _ready() -> void:
@@ -35,7 +35,7 @@ func _ready() -> void:
 # загрузка данных для сцены
 func load_scene() -> void:
 	# контролы
-	control_1 = CControl.new();
+	control = CControl.new();
 	
 	# сетка
 	grid = CGrid.new();
@@ -48,7 +48,7 @@ func _physics_process(delta: float) -> void:
 	# если сцена подгружена
 	if true == _is_loaded_scene:
 		# отрабатываем работу контролов
-		control_1.process(delta);
+		control.process(delta);
 
 # пауза
 func paused() -> void:
@@ -90,4 +90,21 @@ func get_scene() -> Node:
 # выход из игры
 func quit() -> void:
 	get_tree().quit();
+
+# проверка игры, является ли она
+# онлайн
+func is_online() -> bool:
+	# если игра на двоих
+	return get_from_tmp("player2.active", "0") == "1";
+
+# проверка "мира" является ли он мастером
+# или клиентом
+func is_master() -> bool:
+	# если игра оффлайн
+	if false == is_online():
+		# то да, это единственный "мир"
+		return true;
+	
+	# определяем сервер ли
+	return _is_server;
 

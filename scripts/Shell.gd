@@ -14,6 +14,13 @@ func _ready() -> void:
 	# поднимаем механизм действий
 	actions = CActions.new(self);
 	
+	# если игра явялется "мир" 2
+	if true == CApp.is_master():
+		# листаем биты от 0 до 5
+		for _bit in 6:
+			# отключаем коллизию
+			set_collision_mask_bit(_bit, false);
+	
 	# регаем возможные действия
 	actions.set_action(CActionsAmmunitionGo.new("bullet_flight", 3));
 	
