@@ -29,7 +29,7 @@ func _init(entity: Object, name: String) -> void:
 			CControlRule.new("down", "ui_player_1_down", "ui_player_1_down"),
 			CControlRule.new("select", "ui_player_1_accept", "ui_player_1_accept")
 		]
-	], true);
+	]);
 	
 	# собираем пункты
 	var _index: int = 0;
@@ -48,9 +48,13 @@ func _init(entity: Object, name: String) -> void:
 		# переключаем индекс
 		_index += 1;
 	
+	# переводим меню в первичный режим
+	primary();
+
+# переводим меню в первичный режим
+func primary() -> void:
 	# деактивирую все кнопки
 	_deactivate();
-	
 	# активирую первую кнопку
 	activate(_points[0].button);
 

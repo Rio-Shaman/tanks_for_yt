@@ -15,7 +15,7 @@ func _ready() -> void:
 	actions = CActions.new(self);
 	
 	# если игра явялется "мир" 2
-	if true == CApp.is_master():
+	if false == CApp.is_master():
 		# листаем биты от 0 до 5
 		for _bit in 6:
 			# отключаем коллизию

@@ -21,6 +21,12 @@ var volume: float = 0;
 # является ли "мир" сервером
 var _is_server: bool = false;
 
+# порт
+var _port: int = 7777;
+
+# upnp
+var _upnp: UPNP;
+
 # узел готов
 func _ready() -> void:
 	# скрыть мышь
@@ -108,3 +114,40 @@ func is_master() -> bool:
 	# определяем сервер ли
 	return _is_server;
 
+# пробрасываем порт
+func add_port() -> void:
+	# поднимаем UPNP
+	var upnp = UPNP.new();
+	# сканируем девайсы
+	var result = upnp.discover();
+	# если успех
+	if result == UPNP.UPNP_RESULT_SUCCESS:
+		# получаем девайс (дефорлт) и регаем порт
+		upnp.get_gateway().add_port_mapping(
+			_port, 0, ProjectSettings.get_setting("application/config/name")
+		);
+		# сохраняю UPNP
+		_upnp = upnp;
+
+# удаляем порт
+func delete_port() -> void:
+	# если upnp использовался
+	if null != _upnp:
+		var _r = _upnp.get_gateway().delete_port_mapping(_port);
+
+# назначаем "мир" как сервер или клиент
+func set_server(_value: bool) -> void:
+	_is_server = _value;
+
+# получить порт
+func get_port() -> int:
+	return _port;
+
+# проверка по регулярному выражению
+func regex(value: String, _pattern: String) -> bool:
+	# поднимаем объект
+	var _regex = RegEx.new();
+	# компилируем паттерн
+	_regex.compile(_pattern);
+	# проверяем совпадает ли
+	return false == (null == _regex.search(value));
