@@ -66,6 +66,16 @@ func _physics_process(delta: float) -> void:
 		
 		# первый кадр отработал
 		_first_frame = false;
+		
+		# обрываем работу _physics_process
+		return;
+
+	#  если и грок бот
+	if true == is_bot():
+		# если есть действие на исполнение
+		if true == actions.has_current_action():
+			# исполяем его руками
+			actions.get_current_action().process(delta);
 
 # нанести урон
 func make_damage(_npc: KinematicBody, delta: float) -> void:
@@ -274,5 +284,10 @@ func is_bot(_n: int = -1) -> bool:
 	
 	# в остальных случаях НЕ бот
 	return false;
+
+# шарим позицию игрока
+func share_position(transform: Transform) -> void:
+	# сохраняем позицию
+	global_transform = transform;
 
 

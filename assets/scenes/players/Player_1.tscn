@@ -19,33 +19,49 @@ func _ready():
 	actions = CActions.new(self);
 	
 	# регаем возможные действия
-	actions.set_action(CActionsPlayerGo.new(\"up\", \"up\"));
-	actions.set_action(CActionsPlayerGo.new(\"down\", \"down\"));
-	actions.set_action(CActionsPlayerGo.new(\"left\", \"left\"));
-	actions.set_action(CActionsPlayerGo.new(\"right\", \"right\"));
-	actions.set_action(CActionsPlayerShot.new(\"shot\"));
-	actions.set_action(CActionsPlayerSlip.new(\"slip\"));
+	# это общие действия в обоих \"мирах\"
 	actions.set_action(CActionsPlayerDestroy.new(\"destroy\"));
 	actions.set_action(CActionsPlayerRespawn.new(\"respawn\"));
-	actions.set_action(CActionsWindowOpen.new(\"pause\", window_pause));
-	actions.set_action(CActionsWindowOpen.new(\"gameover\", window_gameover));
-	actions.set_action(CActionsWindowOpen.new(\"congratulation\", window_congratulation));
+
+	# регаем возможные действия игрока, если он НЕ бот
+	if false == is_bot(1):
+		actions.set_action(CActionsPlayerGo.new(\"up\", \"up\"));
+		actions.set_action(CActionsPlayerGo.new(\"down\", \"down\"));
+		actions.set_action(CActionsPlayerGo.new(\"left\", \"left\"));
+		actions.set_action(CActionsPlayerGo.new(\"right\", \"right\"));
+		actions.set_action(CActionsPlayerShot.new(\"shot\"));
+		actions.set_action(CActionsPlayerSlip.new(\"slip\"));
+		actions.set_action(CActionsWindowOpen.new(\"pause\", window_pause));
+		actions.set_action(CActionsWindowOpen.new(\"gameover\", window_gameover));
+		actions.set_action(CActionsWindowOpen.new(\"congratulation\", window_congratulation));
 	
-	# регаем игрока в контроллере
-	#CApp.control.set_entity('player', self, [
-	#	[
-	#		CControlRule.new(\"up\", \"ui_player_1_up\", \"ui_player_1_up\"),
-	#		CControlRule.new(\"down\", \"ui_player_1_down\", \"ui_player_1_down\"),
-	#		CControlRule.new(\"left\", \"ui_player_1_left\", \"ui_player_1_left\"),
-	#		CControlRule.new(\"right\", \"ui_player_1_right\", \"ui_player_1_right\")
-	#	],
-	#	[
-	#		CControlRule.new(\"shot\", \"ui_player_1_shot\")
-	#	],
-	#	[
-	#		CControlRule.new(\"pause\", \"ui_player_1_accept\", \"ui_player_1_accept\")
-	#	]
-	#], true);
+	# если игрок НЕ бот
+	if false == is_bot(1):
+		# регаем игрока в контроллере
+		CApp.control.set_entity('player', self, [
+			[
+				CControlRule.new(\"up\", \"ui_player_1_up\", \"ui_player_1_up\"),
+				CControlRule.new(\"down\", \"ui_player_1_down\", \"ui_player_1_down\"),
+				CControlRule.new(\"left\", \"ui_player_1_left\", \"ui_player_1_left\"),
+				CControlRule.new(\"right\", \"ui_player_1_right\", \"ui_player_1_right\")
+			],
+			[
+				CControlRule.new(\"shot\", \"ui_player_1_shot\")
+			],
+			[
+				CControlRule.new(\"pause\", \"ui_player_1_accept\", \"ui_player_1_accept\")
+			]
+		], true);
+		
+		# если 1-ый игрок НЕ бот, то нужны след коллизии ...
+		# ... игрок 2
+		set_collision_mask_bit(2, true);
+		# ... нпс
+		set_collision_mask_bit(4, true);
+		# ... вода
+		set_collision_mask_bit(7, true);
+		# ... бонусы
+		set_collision_mask_bit(9, true);
 	
 	# метод родителя
 	.ready(1);

@@ -54,6 +54,13 @@ func process(delta: float) -> void:
 				Vector3(0, 0, delta * _entity.speed)
 			);
 	
+	# шарим позицию игрока
+	CApp.share_unreliable(
+		_entity,
+		"share_position",
+		_entity.global_transform
+	);
+	
 	# метод родителя
 	.process(delta);
 

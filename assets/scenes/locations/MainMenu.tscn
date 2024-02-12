@@ -168,7 +168,7 @@ func select() -> void:
 	var _wait = \"Control/ColorRect/Wait\";
 	
 	# создаем сервер на 2-х
-	_server.create_server(CApp.get_port(), 2);
+	_server.create_server(CApp.get_port(), 1);
 	
 	# пробрасываем порт
 	# CApp.add_port();
@@ -323,11 +323,14 @@ func _ready() -> void:
 	
 # обработчик сигнала \"все ок\"
 func _connected(_id: int) -> void:
-	print(\"ВСЕ ОК\");
+	# первый уровень
+	var level = \"res://assets/scenes/locations/Level_1.tscn\";
 	
 	# дернуть старт игры у сервера
+	CApp.share(CApp, \"share_change_scene\", level);
 	
 	# дергаем старт игры у себя
+	CApp.change_scene(level);
 	
 # обработчик сигнала \"пошел в жопу\"
 func _connection_failed() -> void:

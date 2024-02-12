@@ -65,6 +65,12 @@ func _ready() -> void:
 	
 # раз в кадр
 func _physics_process(delta: float) -> void:
+	
+	# НЕ сервер
+	if false == CApp.is_master():
+		# то нельзя исполнять дейсвия уровня
+		return;
+	
 	# если НЕТ действие
 	if false == actions.has_current_action():
 		if true == is_revive_tank():

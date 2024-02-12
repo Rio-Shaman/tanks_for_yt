@@ -151,3 +151,89 @@ func regex(value: String, _pattern: String) -> bool:
 	_regex.compile(_pattern);
 	# проверяем совпадает ли
 	return false == (null == _regex.search(value));
+
+# шарим данные
+func share(
+	_object: Node,
+	_method: String,
+	_arg1 = null,
+	_arg2 = null,
+	_arg3 = null,
+	_arg4 = null,
+	_reliable = true
+) -> void:
+	# если игра оффлайн
+	if false == is_online():
+		# то шарить ничего не нужно
+		return;
+	
+	# каким методом будет отправлять
+	var _f = "rpc" if true == _reliable else "rpc_unreliable";
+
+	call(
+		# rpc или rpc_unreliable
+		_f,
+		# удаленный метод в CApp, для общения
+		"remote_method_call",
+		# путь к узлу (Node)
+		_object.get_path(),
+		# метод который нужно дергать
+		_method,
+		# аргументы которые нужно передать
+		_arg1, _arg2, _arg3, _arg4
+	);
+
+# шарим данные
+func share_unreliable(
+	_object: Node,
+	_method: String,
+	_arg1 = null,
+	_arg2 = null,
+	_arg3 = null,
+	_arg4 = null
+) -> void:
+	share(_object, _method, _arg1, _arg2, _arg3, _arg4, false);
+
+# единый метод ля удаленного дерганья методов
+remote func remote_method_call(
+	_path: String,
+	_method: String,
+	_arg1 = null,
+	_arg2 = null,
+	_arg3 = null,
+	_arg4 = null
+) -> void:
+	# есть ли запрашиваемый узел
+	if false == get_scene().has_node(_path):
+		# если нет, обрываем работу метода
+		return;
+		
+	# получаю Node
+	var _node = get_scene().get_node(_path);
+
+	# если НЕТ аргументов
+	if _arg1 == null && _arg2 == null && _arg3 == null && _arg4 == null:
+		# вызываем без аргументов
+		_node.call(_method);
+	# если 1 аргумент
+	if _arg1 != null && _arg2 == null && _arg3 == null && _arg4 == null:
+		# вызываем с 1-им аргументом
+		_node.call(_method, _arg1);
+	# если 2 аргумента
+	if _arg1 != null && _arg2 != null && _arg3 == null && _arg4 == null:
+		# вызываем с 2-я аргументами
+		_node.call(_method, _arg1, _arg2);
+	# если 3 аргумента
+	if _arg1 != null && _arg2 != null && _arg3 != null && _arg4 == null:
+		# вызываем с 3-я аргументами
+		_node.call(_method, _arg1, _arg2, _arg3);
+	# если 4 аргумента
+	if _arg1 != null && _arg2 != null && _arg3 != null && _arg4 != null:
+		# вызываем с 4-я аргументами
+		_node.call(_method, _arg1, _arg2, _arg3, _arg4);
+
+# удаленный рычаг для смены сцены
+func share_change_scene(scene: String) -> void:
+	# меняем сцену
+	change_scene(scene);
+
