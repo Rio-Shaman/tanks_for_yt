@@ -87,23 +87,27 @@ func activate() -> void:
 	
 # выбор пункта
 func select() -> void:
-	# пути к менюшкам
-	var _menu = \"Control/ColorRect/VBoxContainer/CenterContainer/Menu\";
-	var _coop = \"Control/ColorRect/VBoxContainer/CenterContainer/Coop\";
+	# менюшки
+	var _menu = CApp.get_scene().get_node(
+		\"Control/ColorRect/VBoxContainer/CenterContainer/Menu\"
+	);
+	var _coop = CApp.get_scene().get_node(
+		\"Control/ColorRect/VBoxContainer/CenterContainer/Coop\"
+	);
 	# фиксирую что игра коопная
 	CApp.save_in_tmp(\"player2.active\", \"1\");
 
 	# прячем основное меню
-	CApp.get_scene().get_node(_menu).visible = false;
+	_menu.visible = false;
 	# отображаем коопное меню
-	CApp.get_scene().get_node(_coop).visible = true;
+	_coop.visible = true;
 	
 	# сбрасываем кнопки кооп меню
-	CApp.get_scene().get_node(_coop).menu.primary();
+	_coop.menu.primary();
 	
 	# устанавливаем сущность для контрола
 	CApp.control.set_current_entity(
-		CApp.get_scene().get_node(_coop).entity_name
+		_coop.entity_name
 	);
 "
 
@@ -163,9 +167,13 @@ func activate() -> void:
 func select() -> void:
 	# объект рабоы с мультиплеером
 	var _server = NetworkedMultiplayerENet.new();
-	# пути к меню
-	var _coop = \"Control/ColorRect/VBoxContainer/CenterContainer/Coop\";
-	var _wait = \"Control/ColorRect/Wait\";
+	# менюшки
+	var _coop = CApp.get_scene().get_node(
+		\"Control/ColorRect/VBoxContainer/CenterContainer/Coop\"
+	);
+	var _wait = CApp.get_scene().get_node(
+		\"Control/ColorRect/Wait\"
+	);
 	
 	# создаем сервер на 2-х
 	_server.create_server(CApp.get_port(), 1);
@@ -179,9 +187,9 @@ func select() -> void:
 	CApp.set_server(true);
 
 	# прячем кооп меню
-	CApp.get_scene().get_node(_coop).visible = false;
+	_coop.visible = false;
 	# отображаем окно \"ждите\"
-	CApp.get_scene().get_node(_wait).visible = true;
+	_wait.visible = true;
 
 	# устанавливаем сущность для контрола
 	CApp.control.set_current_entity(\"wait\");
@@ -204,19 +212,23 @@ func activate() -> void:
 func select() -> void:
 	# объект рабоы с мультиплеером
 	var _server = NetworkedMultiplayerENet.new();
-	# пути к меню
-	var _coop = \"Control/ColorRect/VBoxContainer/CenterContainer/Coop\";
-	var _ip = \"Control/ColorRect/IP\";
+	# менюшки
+	var _coop = CApp.get_scene().get_node(
+		\"Control/ColorRect/VBoxContainer/CenterContainer/Coop\"
+	);
+	var _ip = CApp.get_scene().get_node(
+		\"Control/ColorRect/IP\"
+	);
 	
 	# прячем кооп меню
-	CApp.get_scene().get_node(_coop).visible = false;
+	_coop.visible = false;
 	# отображаем окно \"введите ip\"
-	CApp.get_scene().get_node(_ip).visible = true;
+	_ip.visible = true;
 
 	# выделяем всю строку
-	CApp.get_scene().get_node(_ip).get_node(\"LineEdit\").select();
+	_ip.get_node(\"LineEdit\").select();
 	# ставим каретку в инпут поле
-	CApp.get_scene().get_node(_ip).get_node(\"LineEdit\").grab_focus();
+	_ip.get_node(\"LineEdit\").grab_focus();
 	
 	# устанавливаем сущность для контрола
 	CApp.control.set_current_entity(\"ip\");
@@ -237,19 +249,23 @@ func activate() -> void:
 	
 # выбор пункта
 func select() -> void:
-	# пути к менюшкам
-	var _menu = \"Control/ColorRect/VBoxContainer/CenterContainer/Menu\";
-	var _coop = \"Control/ColorRect/VBoxContainer/CenterContainer/Coop\";
+	# менюшки
+	var _menu = CApp.get_scene().get_node(
+		\"Control/ColorRect/VBoxContainer/CenterContainer/Menu\"
+	);
+	var _coop = CApp.get_scene().get_node(
+		\"Control/ColorRect/VBoxContainer/CenterContainer/Coop\"
+	);
 	# удаляю что игра коопная
 	CApp.destroy_from_tmp(\"player2.active\");
 
 	# сбрасываем кнопки основного меню
-	CApp.get_scene().get_node(_menu).menu.primary();
+	_menu.menu.primary();
 
 	# отображаем основное меню
-	CApp.get_scene().get_node(_menu).visible = true;
+	_menu.visible = true;
 	# прячем коопное меню
-	CApp.get_scene().get_node(_coop).visible = false;
+	_coop.visible = false;
 
 	# устанавливаем сущность для контрола
 	CApp.control.close_current_entity();
@@ -334,14 +350,16 @@ func _connected(_id: int) -> void:
 	
 # обработчик сигнала \"пошел в жопу\"
 func _connection_failed() -> void:
-	# пути к меню
-	var _coop = \"Control/ColorRect/VBoxContainer/CenterContainer/Coop\";
+	# меню
+	var _coop = CApp.get_scene().get_node(
+		\"Control/ColorRect/VBoxContainer/CenterContainer/Coop\"
+	);
 	
 	# сбросить кнопки кооп меню
-	CApp.get_scene().get_node(_coop).menu.primary();
+	_coop.menu.primary();
 	
 	# отобразить кооп меню
-	CApp.get_scene().get_node(_coop).visible = true;
+	_coop.visible = true;
 	# спрятать окно подключения
 	visible = false;
 	
