@@ -10,10 +10,6 @@ script/source = "extends CPlayerBase
 func _ready():
 	# окно паузы
 	var window_pause = CApp.get_scene().get_node(\"Map/UI/Pause\");
-	# окно гейм овер
-	var window_gameover = CApp.get_scene().get_node(\"Map/UI/GameOver\");
-	# окно итоги
-	var window_congratulation = CApp.get_scene().get_node(\"Map/UI/Congratulation\");
 
 	# поднимаем механизм
 	actions = CActions.new(self);

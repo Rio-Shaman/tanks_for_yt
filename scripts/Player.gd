@@ -29,6 +29,9 @@ var number: int;
 # механизм действий
 var actions: CActions;
 
+# готов ли игрок
+var _ready: bool = false;
+
 # узел готов
 func ready(_number: int) -> void:
 	# записываем номер игрока
@@ -285,9 +288,72 @@ func is_bot(_n: int = -1) -> bool:
 	# в остальных случаях НЕ бот
 	return false;
 
+# готов ли игрок
+func is_ready() -> bool:
+	return _ready;
+
+# отмечаемся как "готов"
+func im_ready() -> void:
+	# переключаем флаг готовности
+	_ready = true;
+	# говорим другому "миру" что я готов
+	_to_say_im_ready();
+
+# сказать: "я готов"
+func _to_say_im_ready() -> void:
+	# шарим состояние
+	CApp.share(self, "share_im_ready");
+	
+	# создать таймер
+	var _timer = get_tree().create_timer(0.1, false);
+	# регаем сигнал исхода таймера
+	_timer.connect("timeout", self, "_repeat_to_say_im_ready");
+
+# поторяю: "я готов"
+func _repeat_to_say_im_ready() -> void:
+	# если игра еще НЕ готова
+	if false == CApp.is_ready():
+		# повторяем запуск "я готов"
+		_to_say_im_ready();
+
+# создаем снаряд
+func create_shell() -> KinematicBody:
+	# создаем снаряд
+	var _shell = load(
+		"res://assets/scenes/ammunition/Shell_Player.tscn"
+	).instance();
+	
+	# настраиваем позицию снаряда
+	_shell.global_transform = get_node("Gun").global_transform;
+
+	# даем уникальное имя
+	_shell.set_name("ShellFrom" + get_name());
+	
+	# сохраняем того кто стрелял
+	_shell.who = self;
+	
+	# скорость снаряда
+	_shell.speed = 15 if hp == 3 else 10;
+	
+	# возвращаем снаряд
+	return _shell;
+
 # шарим позицию игрока
 func share_position(transform: Transform) -> void:
 	# сохраняем позицию
 	global_transform = transform;
 
+# шарим готовность игрока
+func share_im_ready() -> void:
+	_ready = true;
+
+# шарим снаряд
+func share_shell() -> void:
+	# создаем снаряд
+	var _shell = create_shell();
+	
+	# если снаряда с таким name НЕТ на локации
+	if false == CApp.get_scene().has_node(_shell.get_name()):
+		# создаем
+		CApp.get_scene().add_child(_shell);
 

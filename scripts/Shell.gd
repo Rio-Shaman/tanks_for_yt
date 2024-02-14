@@ -33,3 +33,9 @@ func _physics_process(delta: float) -> void:
 		
 	# продолжаем пройцесс действия
 	actions.get_current_action().process(delta);
+
+# шарим уничтожение снаряда
+func share_destroy() -> void:
+	# удаляем ноду
+	queue_free();
+

@@ -63,11 +63,20 @@ func _ready() -> void:
 		# удаляем коллизию
 		_wall.set_collision_layer_bit(0, false);
 	
+	# шарим что мир игрока готов
+	CApp.get_scene().get_node(
+		"Player_" + ("1" if true == CApp.is_master() else "2")
+	).im_ready();
+	
 # раз в кадр
 func _physics_process(delta: float) -> void:
-	
-	# НЕ сервер
-	if false == CApp.is_master():
+	# если ...
+	if (
+		# ... НЕ сервер ...
+			false == CApp.is_master()
+		# ... или игра НЕ готова
+		||	false == CApp.is_ready()
+	):
 		# то нельзя исполнять дейсвия уровня
 		return;
 	

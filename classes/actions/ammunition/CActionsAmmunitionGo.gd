@@ -63,6 +63,9 @@ func end() -> void:
 	):
 		# запускаем метод
 		_is_colliding.collider.make_damage(_entity.who, _delta);
+		
+	# шарим удаление
+	CApp.share(_entity, "share_destroy");
 	
 	# удаляем снаряд
 	_entity.queue_free();

@@ -18,16 +18,23 @@ func _ready() -> void:
 
 # раз в кадр
 func _physics_process(delta: float):
-	
 	# если есть центральное действие
 	if true == actions.has_current_action():
 		# исполняем его
 		actions.get_current_action().process(delta);
 		
 # нанести урон
-func make_damage(_who: KinematicBody, delta: float) -> void:
+func make_damage(_who: KinematicBody, _delete: float) -> void:
+	# шарим уничтожение стены
+	CApp.share(self, \"share_destroy\");
+	
 	# стартуем действие \"уничтожить стену\"
-	actions.set_current_action(\"destroy\", delta);
+	actions.set_current_action(\"destroy\", CApp.get_delta());
+
+# шарим уничтожение стены
+func share_destroy() -> void:
+	# стартуем действие \"уничтожить стену\"
+	actions.set_current_action(\"destroy\", CApp.get_delta());
 "
 
 [sub_resource type="ConcavePolygonShape" id=1]

@@ -27,6 +27,9 @@ var _port: int = 7777;
 # upnp
 var _upnp: UPNP;
 
+# дельта
+var _delta: float;
+
 # узел готов
 func _ready() -> void:
 	# скрыть мышь
@@ -51,10 +54,13 @@ func load_scene() -> void:
 
 # процесс рабоыт приложения
 func _physics_process(delta: float) -> void:
-	# если сцена подгружена
-	if true == _is_loaded_scene:
-		# отрабатываем работу контролов
-		control.process(delta);
+	# сохраняем дельту
+	_delta = delta;
+	
+	# если игра готова
+	if true == is_ready():
+		# отрабатываем работу контрола
+		control.process(_delta);
 
 # пауза
 func paused() -> void:
@@ -152,6 +158,10 @@ func regex(value: String, _pattern: String) -> bool:
 	# проверяем совпадает ли
 	return false == (null == _regex.search(value));
 
+# получить дельту
+func get_delta() -> float:
+	return _delta;
+
 # шарим данные
 func share(
 	_object: Node,
@@ -231,6 +241,26 @@ remote func remote_method_call(
 	if _arg1 != null && _arg2 != null && _arg3 != null && _arg4 != null:
 		# вызываем с 4-я аргументами
 		_node.call(_method, _arg1, _arg2, _arg3, _arg4);
+
+# готова ли игра
+func is_ready() -> bool:
+	# если ...
+	if (
+		# ... игра онлайн ...
+			true == is_online()
+		# ... и есть игроки на сцене
+		&&	false == get_tree().get_nodes_in_group("Players").empty()
+	):
+		# листаем игроков
+		for _player in get_tree().get_nodes_in_group("Players"):
+			# если хотя бы 1 из игроков НЕ готов
+			if false == _player.is_ready():
+				# то говорим что игра еще НЕ готова
+				return false;
+	
+	# в остальных случаях все
+	# зависит от флага _is_loaded_scene
+	return _is_loaded_scene;
 
 # удаленный рычаг для смены сцены
 func share_change_scene(scene: String) -> void:
