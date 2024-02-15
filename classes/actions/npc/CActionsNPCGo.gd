@@ -72,6 +72,13 @@ func process(delta: float) -> void:
 			#	_direction * _distance
 			#);
 		
+		# щарим позицию танка
+		CApp.share_unreliable(
+			_entity,
+			"share_position",
+			_entity.global_transform
+		);
+		
 	# если точки закончились
 	else:
 		# завершаем действие

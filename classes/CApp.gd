@@ -30,6 +30,9 @@ var _upnp: UPNP;
 # дельта
 var _delta: float;
 
+# уникальный номер
+var _unique_number: int = 0;
+
 # узел готов
 func _ready() -> void:
 	# скрыть мышь
@@ -261,6 +264,16 @@ func is_ready() -> bool:
 	# в остальных случаях все
 	# зависит от флага _is_loaded_scene
 	return _is_loaded_scene;
+
+# выдать уникальное имя
+func get_unique_name(_prefix: String = "UniqueName") -> String:
+	# формируем уникальное имя
+	var _unique_name = _prefix + "_" + String(_unique_number);
+	# переключаем ID
+	_unique_number += 1;
+
+	# возвращаем уникальное имя
+	return _unique_name;
 
 # удаленный рычаг для смены сцены
 func share_change_scene(scene: String) -> void:

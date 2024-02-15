@@ -44,7 +44,7 @@ func ready(_number: int) -> void:
 	
 	# назначаем жизней
 	set_lives(
-		int(CApp.get_from_tmp("player" + String(number) + ".lives", "3"))
+		int(CApp.get_from_tmp("player" + String(number) + ".lives", "30"))
 	);
 	
 	# обновляем жизни в UI
@@ -81,7 +81,7 @@ func _physics_process(delta: float) -> void:
 			actions.get_current_action().process(delta);
 
 # нанести урон
-func make_damage(_npc: KinematicBody, delta: float) -> void:
+func make_damage(_npc: KinematicBody, _delete: float) -> void:
 	# если активна броня
 	if true == armor:
 		# домаг наносить нельзя
@@ -100,7 +100,9 @@ func make_damage(_npc: KinematicBody, delta: float) -> void:
 		# закрываеем все действия
 		actions.end_all_actions();
 		# стартуем действие "уничтожить танк"
-		actions.set_current_action("destroy", delta);
+		actions.set_current_action("destroy", CApp.get_delta());
+		# шарим уничтожение танка
+		CApp.share(self, "share_destroy");
 	
 	# если есть еще хп
 	else:
@@ -186,15 +188,8 @@ func set_lives_in_ui() -> void:
 	
 # сохраняем очки игрока
 func save_score(entity: Node) -> void:
-	# блок с числом
-	var _score = load("res://assets/scenes/bonuses/Score.tscn").instance();
-	# заполняем текст
-	_score.get_node("Label").set_text(String(entity.score));
-	# подставляем координаты
-	_score.translation = Vector3(entity.translation.x, 0, entity.translation.z);
-	
-	# грузим на сцену
-	CApp.get_scene().add_child(_score);
+	# уведомление о начислении очков
+	notice(entity);
 	
 	# группа в темп
 	var _group = "player" + String(number);
@@ -223,6 +218,18 @@ func save_score(entity: Node) -> void:
 				_group + ".score_bonuses",
 				String(_scores.get("bonuses") + entity.score)
 			);
+
+# уведомление о начислении очков
+func notice(entity: Node) -> void:
+	# блок с числом
+	var _score = load("res://assets/scenes/bonuses/Score.tscn").instance();
+	# заполняем текст
+	_score.get_node("Label").set_text(String(entity.score));
+	# подставляем координаты
+	_score.translation = Vector3(entity.translation.x, 0, entity.translation.z);
+
+	# грузим на сцену
+	CApp.get_scene().add_child(_score);
 
 # подсчитываем очки игрока
 func scoring(_win: Node) -> void:
@@ -340,8 +347,10 @@ func create_shell() -> KinematicBody:
 
 # шарим позицию игрока
 func share_position(transform: Transform) -> void:
-	# сохраняем позицию
-	global_transform = transform;
+	# если НЕТ действий
+	if false == actions.has_current_action():
+		# сохраняем позицию
+		global_transform = transform;
 
 # шарим готовность игрока
 func share_im_ready() -> void:
@@ -357,3 +366,16 @@ func share_shell() -> void:
 		# создаем
 		CApp.get_scene().add_child(_shell);
 
+# шарим уничтожение
+func share_destroy() -> void:
+	# устанавливаем стартовое хп
+	set_hp(1);
+	# закрываеем все действия
+	actions.end_all_actions();
+	# стартуем действие "уничтожить танк"
+	actions.set_current_action("destroy", CApp.get_delta());
+
+# шарим скольжение
+func share_slip() -> void:
+	# стартуем скольжение
+	actions.set_current_action("slip", CApp.get_delta());

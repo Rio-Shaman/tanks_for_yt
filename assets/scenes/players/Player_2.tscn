@@ -18,6 +18,7 @@ func _ready():
 	# это общие действия в обоих \"мирах\"
 	actions.set_action(CActionsPlayerDestroy.new(\"destroy\"));
 	actions.set_action(CActionsPlayerRespawn.new(\"respawn\"));
+	actions.set_action(CActionsPlayerSlip.new(\"slip\"));
 	
 	# регаем возможные действия, если он НЕ бот
 	if false == is_bot(2):
@@ -26,7 +27,6 @@ func _ready():
 		actions.set_action(CActionsPlayerGo.new(\"left\", \"left\"));
 		actions.set_action(CActionsPlayerGo.new(\"right\", \"right\"));
 		actions.set_action(CActionsPlayerShot.new(\"shot\"));
-		actions.set_action(CActionsPlayerSlip.new(\"slip\"));
 		actions.set_action(CActionsWindowOpen.new(\"pause\", window_pause));
 
 	# если игрок НЕ бот

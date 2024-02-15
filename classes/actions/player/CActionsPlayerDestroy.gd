@@ -22,9 +22,11 @@ func run(delta: float) -> void:
 	# отображаем
 	_parts.visible = true;
 	# даем конкретное имя
-	_parts.set_name("Parts");
+	_parts.set_name("Parts" + _entity.get_name());
+	# назанчаем координаты игрока
+	_parts.global_transform = _entity.global_transform;
 	# грузим на сцену
-	_entity.add_child(_parts);
+	CApp.get_scene().add_child(_parts);
 	
 	# отключаю коллизию
 	_entity.get_node("CollisionShape").disabled = true;
@@ -32,8 +34,18 @@ func run(delta: float) -> void:
 	_entity.set_collision_mask_bit(0, false);
 	# уничтожаем модель танка
 	_entity.get_node("Tank").queue_free();
+
+	# получаем точку респа
+	var _respawn_point = CApp.grid.get_cell_by_type(
+		CApp.grid._PLAYER_1 if _entity.number == 1 else CApp.grid._PLAYER_2
+	).vector;
+	# устанавливаем стратовые координаты танка
+	_entity.global_translation = (
+		_respawn_point + Vector3(0, 0, 2 * CApp.grid.get_cell_size().z)
+	);
+
 	# запускаем скрипт разрушения
-	_entity.get_node("Parts").destroy();
+	_parts.destroy();
 
 # процесс действия
 func process(delta: float) -> void:
@@ -51,16 +63,10 @@ func end() -> void:
 	.end();
 	
 	# удаляем частицы с сцены
-	_entity.get_node("Parts").free();
+	CApp.get_scene().get_node(
+		"Parts" + _entity.get_name()
+	).free();
 	
-	# получаем точку респа
-	var _respawn_point = CApp.grid.get_cell_by_type(
-		CApp.grid._PLAYER_1 if _entity.number == 1 else CApp.grid._PLAYER_2
-	).vector;
-	# двигаю танк в ангар
-	_respawn_point = _respawn_point + Vector3(0, 0, 2 * CApp.grid.get_cell_size().z)
-	# устанавливаем стратовые координаты танка
-	_entity.global_translation = _respawn_point;
 	# уменьшаем кол-во жизней
 	_entity.set_lives(_entity.lives - 1);
 	# устанавиваем кол-во жизней в интерфейсе

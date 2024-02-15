@@ -18,21 +18,16 @@ func run(_delta: float) -> void:
 	start_timer(10);
 	
 	# создаем снаряд
-	_shell = load(
-		"res://assets/scenes/ammunition/Shell_NPC.tscn"
-	).instance();
-	
-	# настраиваем позицию снаряда
-	_shell.global_transform = _entity.get_node("Gun").global_transform;
-	
-	# сохраняем того кто стрелял
-	_shell.who = _entity;
+	_shell = _entity.create_shell();
 	
 	# снаряд полетел
 	_valid = true;
 	
 	# добавляем снаряд на сцену
 	CApp.get_scene().add_child(_shell);
+	
+	# шарим снаряд
+	CApp.share(_entity, "share_shell");
 
 # процесс действия
 func process(delta: float) -> void:

@@ -71,8 +71,10 @@ func end() -> void:
 	
 	# на льду ли игрок
 	if true == _entity.is_on_ice():
-		# стартцем скольжение
+		# стартуем скольжение
 		_entity.actions.set_current_action("slip", _delta);
+		# шарим скольжение
+		CApp.share(_entity, "share_slip");
 
 
 
