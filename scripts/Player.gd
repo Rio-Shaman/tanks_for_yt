@@ -301,7 +301,7 @@ func is_ready() -> bool:
 
 # отмечаемся как "готов"
 func im_ready() -> void:
-	# переключаем флаг готовности
+	# сообщаем что игрок готов
 	_ready = true;
 	# говорим другому "миру" что я готов
 	_to_say_im_ready();
@@ -312,16 +312,14 @@ func _to_say_im_ready() -> void:
 	CApp.share(self, "share_im_ready");
 	
 	# создать таймер
-	var _timer = get_tree().create_timer(0.1, false);
+	var _timer = get_tree().create_timer(0.5, false);
 	# регаем сигнал исхода таймера
 	_timer.connect("timeout", self, "_repeat_to_say_im_ready");
 
 # поторяю: "я готов"
 func _repeat_to_say_im_ready() -> void:
-	# если игра еще НЕ готова
-	if false == CApp.is_ready():
-		# повторяем запуск "я готов"
-		_to_say_im_ready();
+	# повторяем запуск "я готов"
+	_to_say_im_ready();
 
 # создаем снаряд
 func create_shell() -> KinematicBody:
@@ -347,7 +345,7 @@ func create_shell() -> KinematicBody:
 
 # шарим позицию игрока
 func share_position(transform: Transform) -> void:
-	# если НЕТ действий
+	# если игрок НЕ занят
 	if false == actions.has_current_action():
 		# сохраняем позицию
 		global_transform = transform;
@@ -377,5 +375,7 @@ func share_destroy() -> void:
 
 # шарим скольжение
 func share_slip() -> void:
-	# стартуем скольжение
-	actions.set_current_action("slip", CApp.get_delta());
+	# если игрок НЕ занят
+	if false == actions.has_current_action():
+		# стартуем скольжение
+		actions.set_current_action("slip", CApp.get_delta());
