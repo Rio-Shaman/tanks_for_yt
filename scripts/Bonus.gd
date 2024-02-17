@@ -54,9 +54,15 @@ func activate() -> void:
 	visible = false;
 	# накидываем очки за бонус
 	_player.save_score(self);
+	# шарим уведомление
+	CApp.share_unreliable(self, "share_notice", _player.number);
+	# шарим видимость
+	CApp.share(self, "share_visible");
 	
 # деактивация бонуса
 func deactivate() -> void:
+	# шарим уничтожение
+	CApp.share(self, "share_destroy");
 	# удаляем бонус с сцены
 	queue_free();
 
@@ -100,3 +106,25 @@ func _on_body_entered(player: Node) -> void:
 	set_player(player);
 	# активируем бонус
 	activate();
+
+# шарим удаление бонуса
+func share_destroy() -> void:
+	# удаляем бонус с сцены
+	queue_free();
+
+# шарим видимость
+func share_visible() -> void:
+	# делать бонус не видимым
+	visible = false;
+	# звук "бонус взят"
+
+# шарим уведомление
+func share_notice(_number: int) -> void:
+	# листаем игроков
+	for player in CApp.get_scene().get_players():
+		# отыскиваем нужного
+		if player.number == _number:
+			# вызываем уведомление
+			player.notice(self);
+
+

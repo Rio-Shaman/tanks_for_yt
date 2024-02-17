@@ -44,7 +44,7 @@ func ready(_number: int) -> void:
 	
 	# назначаем жизней
 	set_lives(
-		int(CApp.get_from_tmp("player" + String(number) + ".lives", "30"))
+		int(CApp.get_from_tmp("player" + String(number) + ".lives", "3"))
 	);
 	
 	# обновляем жизни в UI
@@ -110,6 +110,8 @@ func make_damage(_npc: KinematicBody, _delete: float) -> void:
 		set_hp(hp - 1);
 		# обновление танка
 		update();
+		# шарим хп
+		CApp.share(self, "share_hp", hp);
 
 # установить для хп значение
 func set_hp(value: int) -> void:
@@ -176,8 +178,9 @@ func is_on_water() -> bool:
 # установить кол-во жизней в интерфейс
 func set_lives_in_ui() -> void:
 	# если второй игрок НЕ активен
+	if false == CApp.is_online() && number == 2:
 		# выходим из метода
-		# return;
+		return;
 	
 	# записываем кол-во жизней в бар
 	CApp.get_scene().get_node(
@@ -309,7 +312,7 @@ func im_ready() -> void:
 # сказать: "я готов"
 func _to_say_im_ready() -> void:
 	# шарим состояние
-	CApp.share(self, "share_im_ready");
+	CApp.share_unreliable(self, "share_im_ready");
 	
 	# создать таймер
 	var _timer = get_tree().create_timer(0.5, false);
@@ -379,3 +382,21 @@ func share_slip() -> void:
 	if false == actions.has_current_action():
 		# стартуем скольжение
 		actions.set_current_action("slip", CApp.get_delta());
+
+# шарим жизни
+func share_lives(value: int) -> void:
+	# назначаем новое кол-во жизней
+	set_lives(value);
+	# перерисовываем UI
+	set_lives_in_ui();
+
+# шарим хп
+func share_hp(value: int) -> void:
+	# сохраняем новое кол-во хп
+	set_hp(value);
+	# обновляет тип танка
+	update();
+
+
+
+

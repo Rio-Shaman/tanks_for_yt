@@ -56,12 +56,14 @@ func _ready():
 		# если 1-ый игрок НЕ бот, то нужны след коллизии ...
 		# ... игрок 2
 		set_collision_mask_bit(2, true);
-		# ... нпс
-		set_collision_mask_bit(4, true);
 		# ... вода
 		set_collision_mask_bit(7, true);
 		# ... бонусы
 		set_collision_mask_bit(9, true);
+		
+	# 1-ой игрок должен коллизиться с ...
+	# ... нпс
+	set_collision_mask_bit(4, true);
 	
 	# метод родителя
 	.ready(1);

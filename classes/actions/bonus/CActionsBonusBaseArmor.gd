@@ -12,11 +12,7 @@ func run(_delta: float) -> void:
 	start_timer(_entity.timer);
 	
 	# скрываем пробиваемую стену вокруг базы
-	CApp.get_scene().get_node("Map/Base/Unarmored").visible = false;
-	# у блоков стены
-	for _wall in CApp.get_scene().get_node("Map/Base/Unarmored").get_children():
-		# отключаем колизию
-		_wall.set_collision_layer_bit(0, false);
+	_entity.hide_red_wall();
 		
 	# листаем нпс
 	for _npc in CApp.get_scene().get_enemies():
@@ -24,6 +20,8 @@ func run(_delta: float) -> void:
 		if true == _npc.in_death_zone:
 			# стартуем действие "уничтожить танк"
 			_npc.actions.set_current_action("destroy", _delta);
+			# шарим уничтожение нпс
+			CApp.share(_npc, "share_destroy");
 			
 	# листаем игроков
 	for _player in CApp.get_scene().get_players():
@@ -35,13 +33,14 @@ func run(_delta: float) -> void:
 			_player.actions.end_all_actions();
 			# стартуем действие "уничтожить танк"
 			_player.actions.set_current_action("destroy", _delta);
+			# шарим уничтожение игрока
+			CApp.share(_player, "share_destroy");
 
 	# отображаем не пробиваемую стену вокруг базы
-	CApp.get_scene().get_node("Map/Base/Armored").visible = true;
-	# у блоков стены
-	for _wall in CApp.get_scene().get_node("Map/Base/Armored").get_children():
-		# активируем колизию
-		_wall.set_collision_layer_bit(0, true);
+	_entity.show_white_wall();
+	
+	# шарим активацию бонуса
+	CApp.share(_entity, "share_activate");
 
 # процесс действия
 func process(delta: float) -> void:
@@ -59,18 +58,12 @@ func end() -> void:
 	.end();
 
 	# скрываем не пробиваемую стену вокруг базы
-	CApp.get_scene().get_node("Map/Base/Armored").visible = false;
-	# у блоков стены
-	for _wall in CApp.get_scene().get_node("Map/Base/Armored").get_children():
-		# отключаем колизию
-		_wall.set_collision_layer_bit(0, false);
-
+	_entity.hide_white_wall();
 	# отображаем пробиваемую стену вокруг базы
-	CApp.get_scene().get_node("Map/Base/Unarmored").visible = true;
-	# у блоков стены
-	for _wall in CApp.get_scene().get_node("Map/Base/Unarmored").get_children():
-		# включаем колизию
-		_wall.set_collision_layer_bit(0, true);
+	_entity.show_red_wall();
+
+	# шарим деактивацию бонуса
+	CApp.share(_entity, "share_deactivate");
 
 	# деактивируем бонус
 	_entity.deactivate();

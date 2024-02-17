@@ -30,6 +30,21 @@ func activate() -> void:
 	elif _bonus.actions.has_current_action():
 		# деактивируем текущий бонус
 		deactivate();
+
+# шарим видимость флага
+func share_flag(_number: int, _value: bool) -> void:
+	# листаем игроков
+	for player in CApp.get_scene().get_players():
+		# отыскиваем нужного
+		if player.number == _number:
+			# меняем видимость флага
+			player.get_node(\"Flag_Blue\").visible = _value;
+			
+			# если игрок номер 2
+			if player.number == 2:
+				# переключаем коллизию воды
+				player.set_collision_mask_bit(8, (false == _value));
+
 "
 
 [sub_resource type="BoxShape" id=1]

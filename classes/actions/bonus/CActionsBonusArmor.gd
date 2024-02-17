@@ -16,6 +16,9 @@ func run(_delta: float) -> void:
 	
 	# отображаем флаг
 	_entity.get_player().get_node("Flag_Red").visible = true;
+	
+	# шарим флаг
+	CApp.share(_entity, "share_flag", _entity.get_player().number, true);
 
 # процесс действия
 func process(delta: float) -> void:
@@ -37,6 +40,9 @@ func end() -> void:
 
 	# прячем флаг
 	_entity.get_player().get_node("Flag_Red").visible = false;
-	
+
+	# шарим флаг
+	CApp.share(_entity, "share_flag", _entity.get_player().number, false);
+
 	# деактивируем бонус
 	_entity.deactivate();

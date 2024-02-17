@@ -35,6 +35,16 @@ func activate() -> void:
 		_bonus.actions.get_current_action().start_timer(timer);
 		# деактивируем бонус
 		deactivate();
+
+# шарим видимость флага
+func share_flag(_number: int, _value: bool) -> void:
+	# листаем игроков
+	for player in CApp.get_scene().get_players():
+		# отыскиваем нужного
+		if player.number == _number:
+			# меняем видимость флага
+			player.get_node(\"Flag_Red\").visible = _value;
+	
 "
 
 [sub_resource type="BoxShape" id=1]

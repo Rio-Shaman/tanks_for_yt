@@ -15,17 +15,6 @@ var respawns: Array;
 # механизм действий
 var actions: CActions;
 
-# список бонусов
-var _bonuses: Array = [
-	"Upgrade",
-	"Life",
-	"Time",
-	"Destroy",
-	"Base_Armor",
-	"Ship",
-	"Armor"
-];
-
 # инициализация
 func _init():
 	# подгружаем первичные
@@ -193,8 +182,16 @@ func get_not_active_bonuses() -> Array:
 
 # сгенерировать бонус
 func generate_bonus() -> void:
-	# бонус
-	var _bonus: Node;
+	# список бонусов
+	var _bonuses: Array = [
+		"Upgrade",
+		"Life",
+		"Time",
+		"Destroy",
+		"Base_Armor",
+		"Ship",
+		"Armor"
+	];
 	# ячейка для спавна бонуса
 	var _cell: Dictionary;
 	# получаем рандомный тип бонуса
@@ -204,6 +201,8 @@ func generate_bonus() -> void:
 
 	# листаем все НЕ активные бонусы
 	for _node in get_not_active_bonuses():
+		# шарим удаление
+		CApp.share(_node, "share_destroy");
 		# уничтожаем бонус
 		_node.free();
 
@@ -213,23 +212,46 @@ func generate_bonus() -> void:
 		_cell = CApp.grid.get_cell_by_type(CApp.grid._BONUS, 0);
 		
 		# если игроков нет на этой ячейке
-		if (false == CApp.grid.is_node_in_cell(players[0], _cell)):
+		if (
+				false == CApp.grid.is_node_in_cell(players[0], _cell)
+			&&	false == CApp.grid.is_node_in_cell(players[1], _cell)
+		):
 			# завершаем цикл
 			break;
 
 	# поднимаем бонус по типу
-	_bonus = load(
-		"res://assets/scenes/bonuses/" + _bonuses[_type] + ".tscn"
+	var _bonus = create_bonus(_bonuses[_type], _cell.vector);
+	# грузим на сцену
+	add_child(_bonus);
+
+	# шарим бонус
+	CApp.share(
+		self,
+		"share_bonus",
+		_bonuses[_type],
+		_bonus.get_translation(),
+		_bonus.get_name()
+	);
+
+# создание бонуса
+func create_bonus(_type: String, _vector: Vector3, _name: String = "") -> Area:
+	# поднимаем бонус по типу
+	var _bonus = load(
+		"res://assets/scenes/bonuses/" + _type + ".tscn"
 	).instance();
 
 	# назначаем координаты ячейки бонусу
-	_bonus.set_translation(_cell.vector);
+	_bonus.set_translation(_vector);
+	# даем уникальное имя
+	_bonus.set_name(
+		_name if _name != "" else CApp.get_unique_name("BONUS")
+	);
 
 	# определяем бонус в группу Bonuses
 	_bonus.add_to_group("Bonuses");
-
-	# грузим на сцену
-	add_child(_bonus);
+	
+	# возвращаем бонус
+	return _bonus;
 
 # нужно ли переходить на след уровень
 func is_next_level() -> bool:
@@ -358,7 +380,12 @@ func share_enemy(_name: String, _is_bonus: bool) -> void:
 	# добавляем НПС на уровень
 	add_child(_npc);
 
-
+# шарим бонус
+func share_bonus(_type: String, _vector: Vector3, _name: String) -> void:
+	# поднимаем бонус
+	var _bonus = create_bonus(_type, _vector, _name);
+	# добавляем бонус на уровень
+	add_child(_bonus);
 
 
 

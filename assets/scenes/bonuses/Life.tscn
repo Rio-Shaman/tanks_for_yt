@@ -17,9 +17,10 @@ func activate() -> void:
 
 	# даем доп жизнь
 	_player.set_lives(_player.lives + 1);
-	
 	# устанавиваем кол-во жизней в интерфейсе
 	_player.set_lives_in_ui();
+	# шарим новое кол-во жизней
+	CApp.share(_player, \"share_lives\", _player.lives);
 
 	# деактивируем бонус
 	deactivate();

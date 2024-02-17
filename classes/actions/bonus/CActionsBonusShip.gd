@@ -19,6 +19,14 @@ func run(_delta: float) -> void:
 		# отключаем 7-ой бит (воду)
 		_entity.get_player().set_collision_mask_bit(7, false);
 
+	# если игрок 2
+	if _entity.get_player().number == 2:
+		# отключаем 8-ой бит (воду)
+		_entity.get_player().set_collision_mask_bit(8, false);
+		
+	# шарим флаг
+	CApp.share(_entity, "share_flag", _entity.get_player().number, true);
+
 # процесс действия
 func process(delta: float) -> void:
 	# метод родителя
@@ -46,7 +54,15 @@ func end() -> void:
 	if _entity.get_player().number == 1:
 		# отключаем 7-ой бит (воду)
 		_entity.get_player().set_collision_mask_bit(7, true);
-	
+		
+	# если игрок 2
+	if _entity.get_player().number == 2:
+		# отключаем 8-ой бит (воду)
+		_entity.get_player().set_collision_mask_bit(8, true);
+
+	# шарим флаг
+	CApp.share(_entity, "share_flag", _entity.get_player().number, false);
+
 	# деактивируем бонус
 	_entity.deactivate();
 

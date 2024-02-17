@@ -19,6 +19,8 @@ func activate() -> void:
 	for _npc in CApp.get_scene().get_enemies():
 		# запускаем уничтожение танка
 		_npc.actions.set_current_action(\"destroy\", _delta);
+		# шарим уничтожение нпс
+		CApp.share(_npc, \"share_destroy\");
 		
 	# деактивируем бонус
 	deactivate();

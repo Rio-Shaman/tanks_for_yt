@@ -19,9 +19,10 @@ func activate() -> void:
 	if _player.hp < 3:
 		# даем доп хп
 		_player.set_hp(_player.hp + 1);
-		
 		# обновляем танк
 		_player.update();
+		# шарим хп
+		CApp.share(_player, \"share_hp\", _player.hp);
 		
 	# деактивируем бонус
 	deactivate();

@@ -35,6 +35,57 @@ func activate() -> void:
 		_bonus.actions.get_current_action().start_timer(timer);
 		# деактивируем бонус
 		deactivate();
+
+# скрыть красную стену
+func hide_red_wall() -> void:
+	# скрываем пробиваемую стену вокруг базы
+	CApp.get_scene().get_node(\"Map/Base/Unarmored\").visible = false;
+	# у блоков стены
+	for _wall in CApp.get_scene().get_node(\"Map/Base/Unarmored\").get_children():
+		# отключаем колизию
+		_wall.set_collision_layer_bit(0, false);
+
+# отобразить красную стену
+func show_red_wall() -> void:
+	# отображаем пробиваемую стену вокруг базы
+	CApp.get_scene().get_node(\"Map/Base/Unarmored\").visible = true;
+	# у блоков стены
+	for _wall in CApp.get_scene().get_node(\"Map/Base/Unarmored\").get_children():
+		# включаем колизию
+		_wall.set_collision_layer_bit(0, true);
+
+# скрыть белую стену
+func hide_white_wall() -> void:
+	# скрываем не пробиваемую стену вокруг базы
+	CApp.get_scene().get_node(\"Map/Base/Armored\").visible = false;
+	# у блоков стены
+	for _wall in CApp.get_scene().get_node(\"Map/Base/Armored\").get_children():
+		# отключаем колизию
+		_wall.set_collision_layer_bit(0, false);
+
+# отобразить белую стену
+func show_white_wall() -> void:
+	# отображаем не пробиваемую стену вокруг базы
+	CApp.get_scene().get_node(\"Map/Base/Armored\").visible = true;
+	# у блоков стены
+	for _wall in CApp.get_scene().get_node(\"Map/Base/Armored\").get_children():
+		# активируем колизию
+		_wall.set_collision_layer_bit(0, true);
+
+# шарим активацию бонуса
+func share_activate() -> void:
+	# прячем красную стену
+	hide_red_wall();
+	# отображаем белую стену
+	show_white_wall();
+
+# шарим деактивацию бонуса
+func share_deactivate() -> void:
+	# прячем белую стену
+	hide_white_wall();
+	# отображаем красную стену
+	show_red_wall();
+
 "
 
 [sub_resource type="BoxShape" id=1]
