@@ -104,7 +104,18 @@ func get_scene() -> Node:
 	
 # выход из игры
 func quit() -> void:
+	# удпляем пробросанный порт
+	# delete_port();
+	# закрываем игру
 	get_tree().quit();
+
+# уведомление
+func _notification(what: int) -> void:
+	# если ОС пытается закрыть игру
+	if (what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST):
+		# удаляем порт
+		# delete_port();
+		pass;
 
 # проверка игры, является ли она
 # онлайн

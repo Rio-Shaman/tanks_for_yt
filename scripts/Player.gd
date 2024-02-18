@@ -57,6 +57,18 @@ func ready(_number: int) -> void:
 	
 	# определяем танк в группу "Players"
 	add_to_group("Players");
+	
+	# если НЕТ жизней
+	if lives == 0:
+		# отображаем плашку game over
+		CApp.get_scene().get_node(
+			"Map/GameOver" + String(number)
+		).visible = true;
+		
+		# если игрок НЕ бот
+		if false == is_bot():
+			# врубаем заглушку
+			CApp.control.set_current_entity("gameover_player");
 
 # раз в кадр
 func _physics_process(delta: float) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://assets/models/navigation/Point.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/scenes/world/Wall_1.tscn" type="PackedScene" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://assets/icons/npc_2.png" type="Texture" id=10]
 [ext_resource path="res://assets/icons/npc_1.png" type="Texture" id=11]
 [ext_resource path="res://assets/icons/npc_3.png" type="Texture" id=12]
+[ext_resource path="res://scripts/GameOver.gd" type="Script" id=13]
 
 [sub_resource type="QuadMesh" id=1]
 size = Vector2( 75, 75 )
@@ -99,6 +100,23 @@ func close() -> void:
 	# закрываем текущую сущность
 	CApp.control.close_current_entity();
 	
+# шарим окно
+func share_window() -> void:
+	# переключаем паузу у проекта
+	if visible == CApp.is_paused():
+		# ставим/снимаем проект на/с паузу(ы)
+		CApp.paused();
+	
+	# если окно закрыто
+	if false == visible:
+		# открываем окно
+		open();
+	# в противном случае
+	else:
+		# закрываем окно
+		close();
+
+
 "
 
 [sub_resource type="GDScript" id=16]
@@ -136,6 +154,15 @@ func open() -> void:
 	# переключаем сущность
 	CApp.control.set_current_entity(\"gameover\");
 	
+# шарим окно
+func share_window() -> void:
+	# переключаем паузу у проекта
+	if visible == CApp.is_paused():
+		# ставим/снимаем проект на/с паузу(ы)
+		CApp.paused();
+	
+	# открываем окно
+	open();
 "
 
 [sub_resource type="GDScript" id=15]
@@ -146,6 +173,9 @@ var actions: CActions;
 
 # узел готов
 func _ready() -> void:
+	# правила
+	var _rules: Array = [];
+	
 	# прячем окно
 	visible = false;
 	
@@ -155,12 +185,15 @@ func _ready() -> void:
 	# регистрация действий
 	actions.set_action(CActionsGameNext.new(\"next\"));
 	
-	# регаем действия для первого контроллера
-	CApp.control.set_entity('congratulation', self, [
-		[
+	# если сервер
+	if true == CApp.is_master():
+		# даем возможность жать на enter
+		_rules = [[
 			CControlRule.new(\"next\", \"ui_player_1_accept\", \"ui_player_1_accept\")
-		]
-	]);
+		]];
+	
+	# регаем действия для первого контроллера
+	CApp.control.set_entity('congratulation', self, _rules);
 
 # открыть окно
 func open() -> void:
@@ -173,9 +206,35 @@ func open() -> void:
 	# переключаем сущность
 	CApp.control.set_current_entity(\"congratulation\");
 	
+# шарим окно
+func share_window() -> void:
+	# переключаем паузу у проекта
+	if visible == CApp.is_paused():
+		# ставим/снимаем проект на/с паузу(ы)
+		CApp.paused();
+	
+	# открываем окно
+	open();
+
 "
 
 [node name="Map" type="Spatial"]
+
+[node name="GameOver1" type="Label3D" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 3, 2, -1 )
+text = "game over"
+font = ExtResource( 7 )
+uppercase = true
+script = ExtResource( 13 )
+_number = 1
+
+[node name="GameOver2" type="Label3D" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 11, 2, -1 )
+text = "game over"
+font = ExtResource( 7 )
+uppercase = true
+script = ExtResource( 13 )
+_number = 2
 
 [node name="Start" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -25 )

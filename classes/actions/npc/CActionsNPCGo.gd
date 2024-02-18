@@ -66,11 +66,10 @@ func process(delta: float) -> void:
 			
 		# если еще нет
 		else:
-			pass;
 			# двигаем танк к точке
-			#_entity.move_and_collide(
-			#	_direction * _distance
-			#);
+			_entity.move_and_collide(
+				_direction * _distance
+			);
 		
 		# щарим позицию танка
 		CApp.share_unreliable(

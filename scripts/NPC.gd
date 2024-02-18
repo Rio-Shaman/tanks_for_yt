@@ -115,8 +115,8 @@ func make_damage(player: KinematicBody, _delete: float) -> void:
 		player.save_score(self);
 		# стартуем действие "уничтожить танк"
 		actions.set_current_action("destroy", CApp.get_delta());
-		# шарим уведомление
-		CApp.share_unreliable(self, "share_notice", player.number);
+		# шарим очки
+		CApp.share(self, "share_score", player.number);
 		# шарим уничтожение танка
 		CApp.share(self, "share_destroy");
 	
@@ -217,10 +217,11 @@ func share_position(transform: Transform) -> void:
 	global_transform = transform;
 
 # шарим уведомление
-func share_notice(_number: int) -> void:
+func share_score(_number: int) -> void:
 	# листаем игроков
-	for _player in CApp.get_scene().get_players():
+	for player in CApp.get_scene().get_players():
 		# отыскиваем нужного
-		if _player.number == _number:
-			# вызываем уведомление
-			_player.notice(self);
+		if player.number == _number:
+			# вызываем пересчет очков
+			player.save_score(self);
+

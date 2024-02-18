@@ -25,9 +25,17 @@ func _physics_process(delta: float):
 		actions.get_current_action().process(delta);
 		
 # нанести урон
-func make_damage(_who: KinematicBody, delta: float) -> void:
+func make_damage(_who: KinematicBody, _delete: float) -> void:
+	# шарим уничтожение
+	CApp.share(self, \"share_destroy\");
+	
 	# стартуем действие \"уничтожить\"
-	actions.set_current_action(\"destroy\", delta);
+	actions.set_current_action(\"destroy\", CApp.get_delta());
+
+# шарим уничтожение стены
+func share_destroy() -> void:
+	# стартуем действие \"уничтожить\"
+	actions.set_current_action(\"destroy\", CApp.get_delta());
 "
 
 [sub_resource type="BoxShape" id=1]

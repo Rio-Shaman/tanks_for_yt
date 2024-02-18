@@ -33,7 +33,7 @@ func run(delta: float) -> void:
 	# отключаю реакцию на мир
 	_entity.set_collision_mask_bit(0, false);
 	# уничтожаем модель танка
-	_entity.get_node("Tank").queue_free();
+	_entity.get_node("Tank").queue_free(); 
 
 	# получаем точку респа
 	var _respawn_point = CApp.grid.get_cell_by_type(
@@ -78,5 +78,13 @@ func end() -> void:
 		_entity.actions.set_current_action("respawn", _delta);
 		
 	else:
-		print("game over");
+		# отображаем плашку game over для игрока
+		CApp.get_scene().get_node(
+			"Map/GameOver" + String(_entity.number)
+		).visible = true;
+		
+		# если игрок НЕ бот
+		if false == _entity.is_bot():
+			# переключаем сущность
+			CApp.control.set_current_entity("gameover_player");
 

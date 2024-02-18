@@ -54,8 +54,8 @@ func activate() -> void:
 	visible = false;
 	# накидываем очки за бонус
 	_player.save_score(self);
-	# шарим уведомление
-	CApp.share_unreliable(self, "share_notice", _player.number);
+	# шарим очки
+	CApp.share(self, "share_score", _player.number);
 	# шарим видимость
 	CApp.share(self, "share_visible");
 	
@@ -119,12 +119,11 @@ func share_visible() -> void:
 	# звук "бонус взят"
 
 # шарим уведомление
-func share_notice(_number: int) -> void:
+func share_score(_number: int) -> void:
 	# листаем игроков
 	for player in CApp.get_scene().get_players():
 		# отыскиваем нужного
 		if player.number == _number:
-			# вызываем уведомление
-			player.notice(self);
-
+			# вызываем пересчет очков
+			player.save_score(self);
 
