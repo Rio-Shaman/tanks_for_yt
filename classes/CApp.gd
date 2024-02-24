@@ -60,8 +60,21 @@ func _physics_process(delta: float) -> void:
 	# сохраняем дельту
 	_delta = delta;
 	
-	# если игра готова
-	if true == is_ready():
+	# проверяем подключение
+	_check_connect();
+	
+	# если...
+	if (
+		# ... игра готова ...
+			true == is_ready()
+		# ... или ...
+		||	(
+			# ... игрок НЕ в лобби ...
+				false == is_lobby()
+			# ... и игра крашнулась
+			&&	true == CApp.get_scene().is_game_crashed()
+		)
+	):
 		# отрабатываем работу контрола
 		control.process(_delta);
 
@@ -191,6 +204,11 @@ func share(
 		# то шарить ничего не нужно
 		return;
 	
+	# если игра крашнулась
+	if false == is_lobby() && true == get_scene().is_game_crashed():
+		# то шарить ничего не нужно
+		return;
+	
 	# каким методом будет отправлять
 	var _f = "rpc" if true == _reliable else "rpc_unreliable";
 
@@ -285,6 +303,65 @@ func get_unique_name(_prefix: String = "UniqueName") -> String:
 
 	# возвращаем уникальное имя
 	return _unique_name;
+
+# в лобби ли игрок
+func is_lobby() -> bool:
+	return get_scene().get_name() == "MainMenu";
+
+# проверяем мультиплеер
+func _check_connect() -> void:
+	# если игра онлайн или он в лобби
+	if false == is_online() || true == is_lobby():
+		# нехрен проверять
+		return;
+	
+	# крашнулас ли игра
+	var _crashed = false;
+	
+	# если "мир" 1
+	if true == is_master():
+		# проверяем 2-ого игрока
+		_crashed = false == is_player2_online();
+		
+	# если "мир" 2
+	else:
+		# проверяем 1-ого игрока
+		_crashed = false == is_player1_online();
+	
+	# если игра крашнулась
+	if true == _crashed:
+		# меням флаг
+		get_scene().set_game_crashed(_crashed);
+
+# игрок упал
+func _player_disconnect(_n: int) -> void:
+	# если игра на паузе
+	if true == is_paused():
+		# выходим из метода
+		return;
+	
+	# запускаем действие "игрок отвалился"
+	control.get_current_entity().actions.set_current_action(
+		"disconnected_player_" + String(_n),
+		get_delta()
+	);
+
+	# завершаем действие руками
+	control.get_current_entity().actions.end_action(
+		"disconnected_player_" + String(_n)
+	);
+
+# 1-ой игрок онлайн
+func is_player1_online() -> bool:
+	# получаю подключение
+	var _network_peer = get_tree().get_network_peer();
+	# проверяем статус
+	return _network_peer.get_connection_status() == _network_peer.CONNECTION_CONNECTED;
+
+# 2-ой игрок онлайн
+func is_player2_online() -> bool:
+	# проверяем список подключений
+	return false == get_tree().get_network_connected_peers().empty();
 
 # удаленный рычаг для смены сцены
 func share_change_scene(scene: String) -> void:

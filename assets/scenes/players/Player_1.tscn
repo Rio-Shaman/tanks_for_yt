@@ -6,6 +6,9 @@
 [sub_resource type="GDScript" id=3]
 script/source = "extends CPlayerBase
 
+# сигнал \"2-ой игрок отвалился\"
+signal player2_disconnected(_n);
+
 # узел готов
 func _ready():
 	# окно паузы
@@ -14,6 +17,8 @@ func _ready():
 	var window_gameover = CApp.get_scene().get_node(\"Map/UI/GameOver\");
 	# окно итоги
 	var window_congratulation = CApp.get_scene().get_node(\"Map/UI/Congratulation\");
+	# окно дисконнекта
+	var window_disconnected = CApp.get_scene().get_node(\"Map/UI/DisconnectedPlayer2\");
 
 	# поднимаем механизм
 	actions = CActions.new(self);
@@ -34,6 +39,7 @@ func _ready():
 		actions.set_action(CActionsWindowOpen.new(\"pause\", window_pause));
 		actions.set_action(CActionsWindowOpen.new(\"gameover\", window_gameover));
 		actions.set_action(CActionsWindowOpen.new(\"congratulation\", window_congratulation));
+		actions.set_action(CActionsWindowOpen.new(\"disconnected_player_2\", window_disconnected));
 	
 	# если игрок НЕ бот
 	if false == is_bot(1):
@@ -61,12 +67,32 @@ func _ready():
 		# ... бонусы
 		set_collision_mask_bit(9, true);
 		
+		# слушаем отключение 2-ого игрока
+		var _error = connect(\"player2_disconnected\", CApp, \"_player_disconnect\");
+		
 	# 1-ой игрок должен коллизиться с ...
 	# ... нпс
 	set_collision_mask_bit(4, true);
 	
 	# метод родителя
 	.ready(1);
+
+# раз в кадр
+func _physics_process(_delta: float) -> void:
+	# если игра оффлайн
+	if false == CApp.is_online():
+		# выходим из метода
+		return;
+	
+	# если игрок бот
+	if true == is_bot():
+		# выходим из метода
+		return;
+		
+	# если игрок 2 упал
+	if false == CApp.is_player2_online():
+		# игра упала
+		emit_signal(\"player2_disconnected\", 2);
 
 
 

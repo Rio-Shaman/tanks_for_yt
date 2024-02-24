@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://assets/models/navigation/Point.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/scenes/world/Wall_1.tscn" type="PackedScene" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://assets/icons/npc_1.png" type="Texture" id=11]
 [ext_resource path="res://assets/icons/npc_3.png" type="Texture" id=12]
 [ext_resource path="res://scripts/GameOver.gd" type="Script" id=13]
+[ext_resource path="res://assets/fonts/normal.tres" type="DynamicFont" id=14]
 
 [sub_resource type="QuadMesh" id=1]
 size = Vector2( 75, 75 )
@@ -215,6 +216,74 @@ func share_window() -> void:
 	
 	# открываем окно
 	open();
+
+"
+
+[sub_resource type="GDScript" id=17]
+script/source = "extends Control
+
+# механизм действий
+var actions: CActions;
+
+# узел готов
+func _ready() -> void:
+	# прячем окно
+	visible = false;
+	
+	# механизм действий
+	actions = CActions.new(self);
+	
+	# регистрация действий
+	actions.set_action(CActionsGameRestart.new(\"restart\"));
+	
+	# регаем действия для первого контроллера
+	CApp.control.set_entity('disconnected_player_1', self, [
+		[
+			CControlRule.new(\"restart\", \"ui_player_1_accept\", \"ui_player_1_accept\")
+		]
+	]);
+
+# открыть окно
+func open() -> void:
+	# показываем окно
+	visible = true;
+	
+	# переключаем сущность
+	CApp.control.set_current_entity(\"disconnected_player_1\");
+
+"
+
+[sub_resource type="GDScript" id=18]
+script/source = "extends Control
+
+# механизм действий
+var actions: CActions;
+
+# узел готов
+func _ready() -> void:
+	# прячем окно
+	visible = false;
+	
+	# механизм действий
+	actions = CActions.new(self);
+	
+	# регистрация действий
+	actions.set_action(CActionsGameRestart.new(\"restart\"));
+	
+	# регаем действия для первого контроллера
+	CApp.control.set_entity('disconnected_player_2', self, [
+		[
+			CControlRule.new(\"restart\", \"ui_player_1_accept\", \"ui_player_1_accept\")
+		]
+	]);
+
+# открыть окно
+func open() -> void:
+	# показываем окно
+	visible = true;
+	
+	# переключаем сущность
+	CApp.control.set_current_entity(\"disconnected_player_2\");
 
 "
 
@@ -1036,6 +1105,7 @@ texture = ExtResource( 8 )
 expand = true
 
 [node name="Pause" type="Control" parent="UI"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = SubResource( 13 )
@@ -1063,6 +1133,7 @@ text = "Пауза"
 uppercase = true
 
 [node name="GameOver" type="Control" parent="UI"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = SubResource( 16 )
@@ -1254,6 +1325,7 @@ text = "0"
 valign = 1
 
 [node name="Congratulation" type="Control" parent="UI"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = SubResource( 15 )
@@ -1443,3 +1515,99 @@ rect_min_size = Vector2( 150, 64 )
 custom_fonts/font = ExtResource( 7 )
 text = "0"
 valign = 1
+
+[node name="DisconnectedPlayer1" type="Control" parent="UI"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource( 17 )
+
+[node name="BG" type="ColorRect" parent="UI/DisconnectedPlayer1"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -261.5
+margin_top = -125.0
+margin_right = 261.5
+margin_bottom = 125.0
+rect_min_size = Vector2( 500, 250 )
+color = Color( 0.14902, 0.14902, 0.14902, 1 )
+
+[node name="Label" type="Label" parent="UI/DisconnectedPlayer1/BG"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -261.5
+margin_top = -21.0
+margin_right = 261.5
+margin_bottom = 21.0
+custom_fonts/font = ExtResource( 7 )
+text = "связь с сервером потеряна"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="Info" type="Label" parent="UI/DisconnectedPlayer1/BG"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -158.0
+margin_top = -32.0
+margin_right = -10.0
+margin_bottom = -10.0
+custom_fonts/font = ExtResource( 14 )
+text = "нажмите enter"
+align = 2
+valign = 1
+uppercase = true
+
+[node name="DisconnectedPlayer2" type="Control" parent="UI"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource( 18 )
+
+[node name="BG" type="ColorRect" parent="UI/DisconnectedPlayer2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -261.5
+margin_top = -125.0
+margin_right = 261.5
+margin_bottom = 125.0
+rect_min_size = Vector2( 500, 250 )
+color = Color( 0.14902, 0.14902, 0.14902, 1 )
+
+[node name="Label" type="Label" parent="UI/DisconnectedPlayer2/BG"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -261.5
+margin_top = -21.0
+margin_right = 261.5
+margin_bottom = 21.0
+custom_fonts/font = ExtResource( 7 )
+text = "игрок покинул сервер"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="Info" type="Label" parent="UI/DisconnectedPlayer2/BG"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -158.0
+margin_top = -32.0
+margin_right = -10.0
+margin_bottom = -10.0
+custom_fonts/font = ExtResource( 14 )
+text = "нажмите enter"
+align = 2
+valign = 1
+uppercase = true

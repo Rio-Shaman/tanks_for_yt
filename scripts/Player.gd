@@ -409,6 +409,3 @@ func share_hp(value: int) -> void:
 	# обновляет тип танка
 	update();
 
-
-
-

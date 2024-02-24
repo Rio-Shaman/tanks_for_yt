@@ -12,6 +12,9 @@ export var respawn_3: String;
 # танки на уровне
 var respawns: Array;
 
+# игра крашнулась
+var _game_crashed: bool = false;
+
 # механизм действий
 var actions: CActions;
 
@@ -56,13 +59,15 @@ func _ready() -> void:
 	CApp.get_scene().get_node(
 		"Player_" + ("1" if true == CApp.is_master() else "2")
 	).im_ready();
-	
+
 # раз в кадр
 func _physics_process(delta: float) -> void:
 	# если ...
 	if (
 		# ... НЕ сервер ...
 			false == CApp.is_master()
+		# ... или игра упала ...
+		||	true == is_game_crashed()
 		# ... или игра НЕ готова
 		||	false == CApp.is_ready()
 	):
@@ -370,6 +375,14 @@ func create_enemy(_name: String = "") -> KinematicBody:
 
 	# возвращаем объект
 	return _npc;
+
+# меняем флаг краш
+func set_game_crashed(_value: bool) -> void:
+	_game_crashed = _value;
+	
+# крашнулась ли игра
+func is_game_crashed() -> bool:
+	return _game_crashed;
 
 # шарим НПС
 func share_enemy(_name: String, _is_bonus: bool) -> void:
