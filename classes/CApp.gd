@@ -16,7 +16,7 @@ var tmp: CTmp;
 var audio: CAudio;
 
 # громкость
-var volume: float = 20;
+var volume: float = 0;
 
 # является ли "мир" сервером
 var _is_server: bool = false;

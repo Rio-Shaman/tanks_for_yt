@@ -47,6 +47,8 @@ func run(delta: float) -> void:
 	# запускаем скрипт разрушения
 	_parts.destroy();
 	
+	# останавливаем звук
+	CApp.audio.stop("engine");
 	# стратуем звук
 	CApp.audio.play("explosion");
 
