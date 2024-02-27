@@ -378,6 +378,8 @@ func share_shell() -> void:
 	if false == CApp.get_scene().has_node(_shell.get_name()):
 		# создаем
 		CApp.get_scene().add_child(_shell);
+		# запускаем звук выстрела
+		CApp.audio.play("shot");
 
 # шарим уничтожение
 func share_destroy() -> void:

@@ -28,6 +28,9 @@ func run(_delta: float) -> void:
 	# запускаем скрипт разрушения
 	_entity.get_node("Parts").destroy();
 	
+	# стратуем звук
+	CApp.audio.play("explosion");
+	
 # процесс действия
 func process(delta: float) -> void:
 	# метод родителя

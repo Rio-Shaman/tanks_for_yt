@@ -58,3 +58,7 @@ func end() -> void:
 	# родитель
 	.end();
 
+	# останвливаем звук езды
+	CApp.audio.stop("engine");
+	# шарим звук
+	CApp.share(CApp, "share_audio_stop", "engine");

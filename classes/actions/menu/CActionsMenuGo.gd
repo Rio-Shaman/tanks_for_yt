@@ -13,7 +13,7 @@ func _init(name: String, direction).(name) -> void:
 # первичное действие
 func run(_delta: float) -> void:
 	# проиграть звук
-	pass;
+	CApp.audio.play("menu");
 
 # окончание действия
 func end() -> void:

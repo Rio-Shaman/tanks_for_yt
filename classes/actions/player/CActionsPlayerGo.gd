@@ -29,6 +29,12 @@ func run(delta: float) -> void:
 	# запоминаем дельту
 	_delta = delta;
 	
+	# стратуем звук езды
+	CApp.audio.play("engine");
+	
+	# шарим звук
+	CApp.share(CApp, "share_audio_play", "engine");
+	
 # процесс действия
 func process(delta: float) -> void:
 
@@ -75,6 +81,12 @@ func end() -> void:
 		_entity.actions.set_current_action("slip", _delta);
 		# шарим скольжение
 		CApp.share(_entity, "share_slip");
+	# если игрок НЕ на льду
+	else:
+		# останвливаем звук езды
+		CApp.audio.stop("engine");
+		# шарим звук
+		CApp.share(CApp, "share_audio_stop", "engine");
 
 
 

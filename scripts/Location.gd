@@ -35,6 +35,13 @@ func _ready() -> void:
 	# загружаем сетку
 	CApp.grid.load_grid();
 	
+	# регаем проигрователи
+	CApp.audio.set_player("engine");
+	CApp.audio.set_player("bg");
+	CApp.audio.set_player("shot");
+	CApp.audio.set_player("explosion");
+	CApp.audio.set_player("bonus");
+	
 	# наполняем первый ангар танками
 	respawns.append(get_respawn_data(respawn_1));
 	# наполняем второй ангар танками
@@ -62,6 +69,20 @@ func _ready() -> void:
 
 # раз в кадр
 func _physics_process(delta: float) -> void:
+	# если звук езды НЕ проигрывается
+	if false == CApp.audio.is_played("engine"):
+		# если фоновый звук НЕ проигрывается
+		if false == CApp.audio.is_played("bg"):
+			# стратуем фоновый звук
+			CApp.audio.play("bg");
+	
+	# если звук езды проигрывается
+	else:
+		# и фон запущен
+		if true == CApp.audio.is_played("bg"):
+			# останавливаем звук фона
+			CApp.audio.stop("bg");
+	
 	# если ...
 	if (
 		# ... НЕ сервер ...

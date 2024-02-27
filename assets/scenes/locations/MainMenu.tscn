@@ -29,6 +29,15 @@ func _ready() -> void:
 	if CApp.is_paused():
 		# снимаем с паузы
 		CApp.paused();
+	
+	# проигрователь главной темы
+	CApp.audio.set_player(\"main\");
+	# звук пунктов меню
+	CApp.audio.set_player(\"menu\");
+	
+	# запускаем главную тему
+	CApp.audio.play(\"main\");
+
 "
 
 [sub_resource type="GDScript" id=7]

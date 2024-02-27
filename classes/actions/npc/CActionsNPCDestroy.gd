@@ -46,6 +46,9 @@ func run(_delta: float) -> void:
 	_entity.get_node("Flag").visible = false;
 	# запускаем скрипт разрушения
 	_entity.get_node("Parts").destroy();
+	
+	# стратуем звук
+	CApp.audio.play("explosion");
 
 # процесс действия
 func process(delta: float) -> void:

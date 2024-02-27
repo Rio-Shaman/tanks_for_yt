@@ -174,9 +174,6 @@ var actions: CActions;
 
 # узел готов
 func _ready() -> void:
-	# правила
-	var _rules: Array = [];
-	
 	# прячем окно
 	visible = false;
 	
@@ -184,17 +181,23 @@ func _ready() -> void:
 	actions = CActions.new(self);
 	
 	# регистрация действий
+	actions.set_action(CActionsWindowClose.new(\"close\", self));
 	actions.set_action(CActionsGameNext.new(\"next\"));
 	
-	# если сервер
-	if true == CApp.is_master():
-		# даем возможность жать на enter
-		_rules = [[
-			CControlRule.new(\"next\", \"ui_player_1_accept\", \"ui_player_1_accept\")
-		]];
-	
 	# регаем действия для первого контроллера
-	CApp.control.set_entity('congratulation', self, _rules);
+	CApp.control.set_entity('congratulation', self, [
+		[
+			CControlRule.new(\"next\", \"ui_player_1_accept\", \"ui_player_1_accept\")
+		]
+	]);
+
+# закрыть окно
+func close() -> void:
+	# прячем окно
+	visible = false;
+	
+	# закрываем текущую сущность
+	CApp.control.close_current_entity();
 
 # открыть окно
 func open() -> void:

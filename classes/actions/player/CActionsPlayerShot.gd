@@ -27,6 +27,9 @@ func run(_delta: float) -> void:
 	# добавляем снаряд на сцену
 	CApp.get_scene().add_child(_shell);
 	
+	# запускаем звук выстрела
+	CApp.audio.play("shot");
+	
 	# шарим снаряд
 	CApp.share(_entity, "share_shell");
 

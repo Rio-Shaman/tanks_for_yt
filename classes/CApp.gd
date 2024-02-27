@@ -16,7 +16,7 @@ var tmp: CTmp;
 var audio: CAudio;
 
 # громкость
-var volume: float = 0;
+var volume: float = 20;
 
 # является ли "мир" сервером
 var _is_server: bool = false;
@@ -51,6 +51,9 @@ func load_scene() -> void:
 	
 	# сетка
 	grid = CGrid.new();
+	
+	# объект класса по работе с звуками
+	audio = CAudio.new();
 	
 	# говорим, что данные для сцены подгружены
 	_is_loaded_scene = true;
@@ -310,7 +313,7 @@ func is_lobby() -> bool:
 
 # проверяем мультиплеер
 func _check_connect() -> void:
-	# если игра онлайн или он в лобби
+	# если игра оффлай или игрок в лобби
 	if false == is_online() || true == is_lobby():
 		# нехрен проверять
 		return;
@@ -368,3 +371,10 @@ func share_change_scene(scene: String) -> void:
 	# меняем сцену
 	change_scene(scene);
 
+# шарим звук
+func share_audio_play(_name: String) -> void:
+	audio.play(_name);
+
+# шарим звук
+func share_audio_stop(_name: String) -> void:
+	audio.stop(_name);

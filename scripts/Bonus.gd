@@ -33,6 +33,9 @@ func _ready():
 	# поднимаем механизм действий
 	actions = CActions.new(self);
 	
+	# запускаем звук
+	CApp.audio.play("bonus");
+	
 	# триггер на коллизию с игроком
 	var _error = connect("body_entered", self, "_on_body_entered");
 	
@@ -52,6 +55,8 @@ func activate() -> void:
 	get_node("CollisionShape").disabled = true;
 	# делаем бонус не видимым
 	visible = false;
+	# запускаем звук
+	CApp.audio.play("bonus");
 	# накидываем очки за бонус
 	_player.save_score(self);
 	# шарим очки
@@ -117,6 +122,7 @@ func share_visible() -> void:
 	# делать бонус не видимым
 	visible = false;
 	# звук "бонус взят"
+	CApp.audio.play("bonus");
 
 # шарим уведомление
 func share_score(_number: int) -> void:

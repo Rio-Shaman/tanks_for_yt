@@ -46,6 +46,9 @@ func run(delta: float) -> void:
 
 	# запускаем скрипт разрушения
 	_parts.destroy();
+	
+	# стратуем звук
+	CApp.audio.play("explosion");
 
 # процесс действия
 func process(delta: float) -> void:
